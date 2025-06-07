@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  joker-builds-collector:
+    build: .
+    container_name: joker-builds-collector
+    restart: unless-stopped
+    
+    environment:
+      # Database settings
+      - DB_PATH=/app/data/ladder_snapshots.db
+      
+      # Collection schedule (UTC times)
+      - COLLECTION_TIME=02:00
+      - CLEANUP_TIME=03:00
+      - CLEANUP_DAYS=90
+      
+      # Logging
+      - LOG_LEVEL=INFO
+      
+      # Optional: Webhook URL for notifications
+      # - WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+      
+    volumes:
+      # Persistent data storage
+      - ./data:/app/data
+      
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    
+    command: python -m src.scheduler.daily_collector
+    
+    # Resource limits (adjust as needed)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "from src.storage.database import DatabaseManager; db = DatabaseManager(); print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  dashboard:
+    build: .
+    container_name: joker-builds-dashboard
+    restart: unless-stopped
+    
+    environment:
+      # Database settings
+      - DB_PATH=/app/data/ladder_snapshots.db
+      - FLASK_ENV=production
+    
+    volumes:
+      # Shared data storage with collector
+      - ./data:/app/data
+    
+    ports:
+      - "5000:5000"
+    
+    command: python web_dashboard.py
+    
+    depends_on:
+      - joker-builds-collector
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
