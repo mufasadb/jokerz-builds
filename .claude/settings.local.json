@@ -17,7 +17,10 @@
       "Bash(git add:*)",
       "Bash(git init:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(mv:*)",
+      "Bash(copy-env-vars)",
+      "Bash(upload-to-s3:*)"
     ],
     "deny": []
   }

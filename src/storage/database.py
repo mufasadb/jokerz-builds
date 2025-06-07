@@ -384,12 +384,16 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def get_league_summary(self, league: str) -> Dict[str, Any]:
+    def get_league_summary(self, league: str, ladder_type: str = "exp") -> Dict[str, Any]:
         """Get summary statistics for a league"""
         session = self.get_session()
         try:
-            # Get latest snapshot
-            latest_snapshot = self.get_latest_snapshot(league)
+            # Get latest snapshot using the same session
+            latest_snapshot = session.query(LadderSnapshot).filter_by(
+                league=league,
+                ladder_type=ladder_type
+            ).order_by(LadderSnapshot.snapshot_date.desc()).first()
+            
             if not latest_snapshot:
                 return {"error": "No snapshots found for league"}
             

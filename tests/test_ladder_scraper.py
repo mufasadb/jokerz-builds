@@ -24,28 +24,24 @@ class TestLadderScraper:
     
     @pytest.fixture
     def sample_ladder_data(self):
-        """Sample ladder data for testing in PoE API format"""
+        """Sample ladder data for testing in converted format for database"""
         return {
             "data": [
                 {
-                    "account": {"name": "TestAccount1"},
-                    "character": {
-                        "name": "TestChar1",
-                        "level": 95,
-                        "experience": 5000000,
-                        "class": "Witch"
-                    },
-                    "depth": 600
+                    "account": "TestAccount1",  # String, not dict
+                    "name": "TestChar1",
+                    "level": 95,
+                    "experience": 5000000,
+                    "class": "Witch",
+                    "depth": {"solo": 600}  # Use object format like database tests
                 },
                 {
-                    "account": {"name": "TestAccount2"}, 
-                    "character": {
-                        "name": "TestChar2",
-                        "level": 98,
-                        "experience": 8000000,
-                        "class": "Marauder"
-                    },
-                    "depth": 400
+                    "account": "TestAccount2",  # String, not dict
+                    "name": "TestChar2",
+                    "level": 98,
+                    "experience": 8000000,
+                    "class": "Marauder",
+                    "depth": {"solo": 400}  # Use object format like database tests
                 }
             ]
         }
@@ -125,7 +121,7 @@ class TestLadderScraper:
         """Test snapshot needed when previous snapshot is old"""
         # Create old snapshot with proper format
         old_data = {"data": [{"account": "test", "name": "test", "level": 90}]}
-        scraper.db.save_ladder_snapshot(old_data, "TestLeague", "league")
+        scraper.db.save_ladder_snapshot(ladder_data=old_data, league="TestLeague", ladder_type="league")
         
         # Manually update timestamp to make it old
         session = scraper.db.get_session()
@@ -143,17 +139,35 @@ class TestLadderScraper:
         """Test snapshot not needed when recent snapshot exists"""
         # Create recent snapshot with proper format
         recent_data = {"data": [{"account": "test", "name": "test", "level": 90}]}
-        scraper.db.save_ladder_snapshot(recent_data, "TestLeague", "league")
+        scraper.db.save_ladder_snapshot(ladder_data=recent_data, league="TestLeague", ladder_type="league")
         
         result = scraper.check_if_snapshot_needed("TestLeague", "league")
         assert result is False
     
     def test_get_league_status(self, scraper, sample_ladder_data):
         """Test getting league status"""
-        # Create snapshot
-        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
+        # Create snapshot - add a small delay to ensure proper database commit
+        snapshot_id = scraper.db.save_ladder_snapshot(
+            ladder_data=sample_ladder_data, 
+            league="TestLeague", 
+            ladder_type="league"
+        )
+        assert snapshot_id is not None, "Failed to save snapshot"
+        
+        # Try getting status from database directly first
+        session = scraper.db.get_session()
+        try:
+            from src.storage.database import LadderSnapshot
+            count = session.query(LadderSnapshot).filter_by(league="TestLeague").count()
+            assert count > 0, f"No snapshots found in database for TestLeague, but save returned ID {snapshot_id}"
+        finally:
+            session.close()
         
         status = scraper.get_league_status("TestLeague")
+        
+        # If we get an error, provide more debugging info
+        if "error" in status:
+            pytest.fail(f"get_league_status returned error: {status['error']}, but snapshot was saved with ID {snapshot_id}")
         
         assert "total_snapshots" in status
         assert status["total_snapshots"] == 1
@@ -171,7 +185,11 @@ class TestLadderScraper:
             modified_data["data"][0]["level"] = 90 + i
             modified_data["data"][0]["experience"] = 4000000 + (i * 500000)
             
-            scraper.db.save_ladder_snapshot(modified_data, "TestLeague", "league")
+            scraper.db.save_ladder_snapshot(
+                ladder_data=modified_data, 
+                league="TestLeague", 
+                ladder_type="league"
+            )
             
             # Update timestamp manually for different snapshots
             if i > 0:
@@ -193,7 +211,11 @@ class TestLadderScraper:
     def test_cleanup_old_data(self, scraper, sample_ladder_data):
         """Test cleanup of old snapshots"""
         # Create old snapshot
-        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
+        scraper.db.save_ladder_snapshot(
+            ladder_data=sample_ladder_data, 
+            league="TestLeague", 
+            ladder_type="league"
+        )
         
         # Make it old
         session = scraper.db.get_session()
@@ -255,8 +277,16 @@ class TestLadderScraper:
     def test_database_deduplication(self, scraper, sample_ladder_data):
         """Test that identical data is not duplicated"""
         # Save same data twice
-        id1 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
-        id2 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
+        id1 = scraper.db.save_ladder_snapshot(
+            ladder_data=sample_ladder_data, 
+            league="TestLeague", 
+            ladder_type="league"
+        )
+        id2 = scraper.db.save_ladder_snapshot(
+            ladder_data=sample_ladder_data, 
+            league="TestLeague", 
+            ladder_type="league"
+        )
         
         # Should return same ID (deduplication)
         assert id1 == id2

@@ -760,7 +760,10 @@ class LadderScraper:
     def get_league_status(self, league: str) -> Dict[str, Any]:
         """Get current status for a league"""
         try:
-            summary = self.db.get_league_summary(league)
+            # Try "league" ladder type first (what scraper uses), then fall back to "exp"
+            summary = self.db.get_league_summary(league, "league")
+            if "error" in summary:
+                summary = self.db.get_league_summary(league, "exp")
             
             # Add freshness information
             if 'latest_snapshot_date' in summary:

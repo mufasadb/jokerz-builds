@@ -27,3 +27,10 @@ Ensure that any case that might involve polling external websites does not make 
 Do not leave To dos, complete all work relevant to a task, do not mock data, except for tests, where data schemas have already been confirmed
 Do not stray from task, touching on unrelated or even only partially related tasks
 Where utilising libraries pick those that are most popular and recently updated to avoid deprecation
+
+## Git Workflow
+
+ALWAYS commit changes after completing and testing each task.
+Use descriptive commit messages that explain what was implemented.
+We can always roll back if needed, so commit frequently to save progress.
+This ensures work is preserved and allows for easy rollbacks if needed.
