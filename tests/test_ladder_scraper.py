@@ -24,38 +24,28 @@ class TestLadderScraper:
     
     @pytest.fixture
     def sample_ladder_data(self):
-        """Sample ladder data for testing"""
+        """Sample ladder data for testing in PoE API format"""
         return {
             "data": [
                 {
-                    "account": "TestAccount1",
-                    "name": "TestChar1",
-                    "level": 95,
-                    "experience": 5000000,
-                    "class": "Witch",
-                    "ascendancy": "Necromancer",
-                    "life": 6500,
-                    "energyShield": 2000,
-                    "dps": 150000,
-                    "depth": {"solo": 600, "default": 650},
-                    "mainSkill": "Summon Skeletons",
-                    "skills": ["Summon Skeletons", "Bone Armor", "Convocation"],
-                    "uniques": ["Femurs of the Saints", "Vis Mortis"]
+                    "account": {"name": "TestAccount1"},
+                    "character": {
+                        "name": "TestChar1",
+                        "level": 95,
+                        "experience": 5000000,
+                        "class": "Witch"
+                    },
+                    "depth": 600
                 },
                 {
-                    "account": "TestAccount2", 
-                    "name": "TestChar2",
-                    "level": 98,
-                    "experience": 8000000,
-                    "class": "Marauder",
-                    "ascendancy": "Juggernaut",
-                    "life": 8500,
-                    "energyShield": 0,
-                    "dps": 200000,
-                    "depth": {"solo": 400},
-                    "mainSkill": "Earthquake",
-                    "skills": ["Earthquake", "Fortify", "Enduring Cry"],
-                    "uniques": ["Disfavour", "Kaom's Heart"]
+                    "account": {"name": "TestAccount2"}, 
+                    "character": {
+                        "name": "TestChar2",
+                        "level": 98,
+                        "experience": 8000000,
+                        "class": "Marauder"
+                    },
+                    "depth": 400
                 }
             ]
         }
@@ -72,21 +62,20 @@ class TestLadderScraper:
         assert scraper.db is not None
         assert isinstance(scraper.leagues_to_monitor, list)
         assert "Standard" in scraper.leagues_to_monitor
-        assert "exp" in scraper.ladder_types
+        assert "league" in scraper.ladder_types
     
-    @patch('src.scraper.ladder_scraper.PoeNinjaClient')
-    def test_collect_daily_snapshot_success(self, mock_client_class, scraper, sample_ladder_data):
+    def test_collect_daily_snapshot_success(self, scraper, sample_ladder_data):
         """Test successful snapshot collection"""
-        # Mock the client
+        # Mock the ladder client directly on the scraper instance
         mock_client = Mock()
-        mock_client.get_build_overview.return_value = sample_ladder_data
-        mock_client_class.return_value = mock_client
+        mock_client.get_full_ladder.return_value = sample_ladder_data["data"]
+        scraper.ladder_client = mock_client
         
         # Test collection
-        result = scraper.collect_daily_snapshot("TestLeague", "exp")
+        result = scraper.collect_daily_snapshot("TestLeague", "league")
         
         assert result is True
-        mock_client.get_build_overview.assert_called_once_with(overview_type="exp")
+        mock_client.get_full_ladder.assert_called_once()
         
         # Verify data was saved to database
         session = scraper.db.get_session()
@@ -103,42 +92,40 @@ class TestLadderScraper:
         finally:
             session.close()
     
-    @patch('src.scraper.ladder_scraper.PoeNinjaClient')
-    def test_collect_daily_snapshot_api_failure(self, mock_client_class, scraper):
+    def test_collect_daily_snapshot_api_failure(self, scraper):
         """Test handling of API failure"""
         # Mock client returning None (API failure)
         mock_client = Mock()
-        mock_client.get_build_overview.return_value = None
-        mock_client_class.return_value = mock_client
+        mock_client.get_full_ladder.return_value = None
+        scraper.ladder_client = mock_client
         
         # Test collection
-        result = scraper.collect_daily_snapshot("TestLeague", "exp")
+        result = scraper.collect_daily_snapshot("TestLeague", "league")
         
         assert result is False
     
-    @patch('src.scraper.ladder_scraper.PoeNinjaClient')
-    def test_collect_daily_snapshot_empty_data(self, mock_client_class, scraper):
+    def test_collect_daily_snapshot_empty_data(self, scraper):
         """Test handling of empty data response"""
         # Mock client returning empty data
         mock_client = Mock()
-        mock_client.get_build_overview.return_value = {"data": []}
-        mock_client_class.return_value = mock_client
+        mock_client.get_full_ladder.return_value = []
+        scraper.ladder_client = mock_client
         
         # Test collection
-        result = scraper.collect_daily_snapshot("TestLeague", "exp")
+        result = scraper.collect_daily_snapshot("TestLeague", "league")
         
         assert result is False
     
     def test_check_if_snapshot_needed_no_previous(self, scraper):
         """Test snapshot needed when no previous snapshot exists"""
-        result = scraper.check_if_snapshot_needed("NewLeague", "exp")
+        result = scraper.check_if_snapshot_needed("NewLeague", "league")
         assert result is True
     
     def test_check_if_snapshot_needed_old_snapshot(self, scraper):
         """Test snapshot needed when previous snapshot is old"""
         # Create old snapshot
         old_data = {"data": [{"account": "test", "name": "test", "level": 90}]}
-        scraper.db.save_ladder_snapshot(old_data, "TestLeague", "exp")
+        scraper.db.save_ladder_snapshot(old_data, "TestLeague", "league")
         
         # Manually update timestamp to make it old
         session = scraper.db.get_session()
@@ -149,22 +136,22 @@ class TestLadderScraper:
         finally:
             session.close()
         
-        result = scraper.check_if_snapshot_needed("TestLeague", "exp")
+        result = scraper.check_if_snapshot_needed("TestLeague", "league")
         assert result is True
     
     def test_check_if_snapshot_needed_recent_snapshot(self, scraper):
         """Test snapshot not needed when recent snapshot exists"""
         # Create recent snapshot
         recent_data = {"data": [{"account": "test", "name": "test", "level": 90}]}
-        scraper.db.save_ladder_snapshot(recent_data, "TestLeague", "exp")
+        scraper.db.save_ladder_snapshot(recent_data, "TestLeague", "league")
         
-        result = scraper.check_if_snapshot_needed("TestLeague", "exp")
+        result = scraper.check_if_snapshot_needed("TestLeague", "league")
         assert result is False
     
     def test_get_league_status(self, scraper, sample_ladder_data):
         """Test getting league status"""
         # Create snapshot
-        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "exp")
+        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
         
         status = scraper.get_league_status("TestLeague")
         
@@ -184,7 +171,7 @@ class TestLadderScraper:
             modified_data["data"][0]["level"] = 90 + i
             modified_data["data"][0]["experience"] = 4000000 + (i * 500000)
             
-            scraper.db.save_ladder_snapshot(modified_data, "TestLeague", "exp")
+            scraper.db.save_ladder_snapshot(modified_data, "TestLeague", "league")
             
             # Update timestamp manually for different snapshots
             if i > 0:
@@ -206,7 +193,7 @@ class TestLadderScraper:
     def test_cleanup_old_data(self, scraper, sample_ladder_data):
         """Test cleanup of old snapshots"""
         # Create old snapshot
-        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "exp")
+        scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
         
         # Make it old
         session = scraper.db.get_session()
@@ -230,26 +217,25 @@ class TestLadderScraper:
         finally:
             session.close()
     
-    @patch('src.scraper.ladder_scraper.PoeNinjaClient')
     @patch('time.sleep')  # Mock sleep to speed up tests
-    def test_collect_all_snapshots(self, mock_sleep, mock_client_class, scraper, sample_ladder_data):
+    def test_collect_all_snapshots(self, mock_sleep, scraper, sample_ladder_data):
         """Test collecting snapshots for all leagues"""
         # Mock client
         mock_client = Mock()
-        mock_client.get_build_overview.return_value = sample_ladder_data
-        mock_client_class.return_value = mock_client
+        mock_client.get_full_ladder.return_value = sample_ladder_data["data"]
+        scraper.ladder_client = mock_client
         
         # Override leagues for testing
         scraper.leagues_to_monitor = ["League1", "League2"]
-        scraper.ladder_types = ["exp"]
+        scraper.ladder_types = ["league"]
         
         results = scraper.collect_all_snapshots()
         
         # Should have results for both leagues
         assert "League1" in results
         assert "League2" in results
-        assert results["League1"]["exp"] is True
-        assert results["League2"]["exp"] is True
+        assert results["League1"]["league"] is True
+        assert results["League2"]["league"] is True
         
         # Verify database has snapshots for both leagues
         session = scraper.db.get_session()
@@ -269,8 +255,8 @@ class TestLadderScraper:
     def test_database_deduplication(self, scraper, sample_ladder_data):
         """Test that identical data is not duplicated"""
         # Save same data twice
-        id1 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "exp")
-        id2 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "exp")
+        id1 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
+        id2 = scraper.db.save_ladder_snapshot(sample_ladder_data, "TestLeague", "league")
         
         # Should return same ID (deduplication)
         assert id1 == id2
@@ -299,51 +285,47 @@ class TestLadderScraperIntegration:
         scraper = LadderScraper(database_url=temp_db, backup_to_files=False)
         
         # Mock data for multiple time periods
-        base_data = {
-            "data": [
-                {
-                    "account": "Player1",
+        base_data = [
+            {
+                "account": {"name": "Player1"},
+                "character": {
                     "name": "Char1", 
                     "level": 95,
-                    "class": "Witch",
-                    "ascendancy": "Necromancer",
-                    "skills": ["Summon Skeletons"],
-                    "uniques": ["Femurs of the Saints"]
+                    "class": "Witch"
                 }
-            ]
-        }
+            }
+        ]
         
         # Simulate data collection over time
-        with patch('src.scraper.ladder_scraper.PoeNinjaClient') as mock_client_class:
-            mock_client = Mock()
-            mock_client.get_build_overview.return_value = base_data
-            mock_client_class.return_value = mock_client
-            
-            # Collect initial snapshot
-            success = scraper.collect_daily_snapshot("TestLeague", "exp")
-            assert success is True
-            
-            # Verify we can get status
-            status = scraper.get_league_status("TestLeague")
-            assert status["total_snapshots"] == 1
-            assert status["latest_character_count"] == 1
-            
-            # Verify character tracking works
-            tracking = scraper.get_character_tracking("Player1", "Char1") 
-            assert len(tracking) == 1
-            assert tracking[0]["level"] == 95
-            
-            # Test that recent snapshot prevents duplicate collection
-            needed = scraper.check_if_snapshot_needed("TestLeague", "exp")
-            assert needed is False
-            
-            # Test cleanup (should not delete recent data)
-            deleted = scraper.cleanup_old_data(keep_days=30)
-            assert deleted == 0
-            
-            # Verify data still exists
-            final_status = scraper.get_league_status("TestLeague")
-            assert final_status["total_snapshots"] == 1
+        mock_client = Mock()
+        mock_client.get_full_ladder.return_value = base_data
+        scraper.ladder_client = mock_client
+        
+        # Collect initial snapshot
+        success = scraper.collect_daily_snapshot("TestLeague", "league")
+        assert success is True
+        
+        # Verify we can get status
+        status = scraper.get_league_status("TestLeague")
+        assert status["total_snapshots"] == 1
+        assert status["latest_character_count"] == 1
+        
+        # Verify character tracking works
+        tracking = scraper.get_character_tracking("Player1", "Char1") 
+        assert len(tracking) == 1
+        assert tracking[0]["level"] == 95
+        
+        # Test that recent snapshot prevents duplicate collection
+        needed = scraper.check_if_snapshot_needed("TestLeague", "league")
+        assert needed is False
+        
+        # Test cleanup (should not delete recent data)
+        deleted = scraper.cleanup_old_data(keep_days=30)
+        assert deleted == 0
+        
+        # Verify data still exists
+        final_status = scraper.get_league_status("TestLeague")
+        assert final_status["total_snapshots"] == 1
     
     def test_database_schema_integrity(self, temp_db):
         """Test that database schema is created correctly"""
