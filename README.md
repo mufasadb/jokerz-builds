@@ -181,6 +181,12 @@ Access at: `http://[UNRAID-IP]:5000`
    - Success/failure rates
    - Response times
 
+5. **Manual Data Collection**
+   - Start collection on-demand
+   - Real-time progress monitoring
+   - League selection options
+   - Live status updates via WebSocket
+
 ## Data Collection
 
 ### What Gets Collected
@@ -282,6 +288,14 @@ SELECT tankiness_rating, COUNT(*) FROM characters
 
 ### Manual Operations
 
+**Via Web Dashboard (Recommended):**
+- Navigate to `http://[UNRAID-IP]:5000`
+- Use the "Data Collection Control" panel
+- Select leagues and options
+- Click "Start Collection"
+- Monitor real-time progress
+
+**Via Command Line:**
 ```bash
 # Check collection status
 docker exec joker-builds-collector python -m src.scheduler.daily_collector --status

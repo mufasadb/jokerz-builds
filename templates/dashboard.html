@@ -6,6 +6,7 @@
     <title>Joker Builds Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <style>
         .stat-card {
             transition: transform 0.2s;
@@ -89,6 +90,80 @@
             </div>
         </div>
 
+        <!-- Scraping Control Panel -->
+        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Data Collection Control</h2>
+                <button id="start-scraping-btn" 
+                        class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                        onclick="startScraping()">
+                    Start Collection
+                </button>
+            </div>
+            
+            <!-- Active Task Status -->
+            <div id="active-task" class="hidden">
+                <div class="bg-gray-700 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-semibold text-green-400">Collection in Progress</h3>
+                        <span id="task-status" class="px-2 py-1 rounded text-xs bg-blue-600">Running</span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span id="current-step">Initializing...</span>
+                            <span id="progress-text">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-600 rounded-full h-2">
+                            <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-400">Current League:</span>
+                            <div id="current-league" class="font-medium">-</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Characters Collected:</span>
+                            <div id="characters-collected" class="font-medium">0</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Characters Enhanced:</span>
+                            <div id="characters-enhanced" class="font-medium">0</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Elapsed Time:</span>
+                            <div id="elapsed-time" class="font-medium">0s</div>
+                        </div>
+                    </div>
+                    
+                    <div id="current-operation" class="text-sm text-gray-400 mt-2">
+                        Waiting for updates...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collection Options -->
+            <div id="collection-options" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Leagues to Collect</label>
+                    <select id="league-select" multiple class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm">
+                        <option value="">All Leagues</option>
+                    </select>
+                    <p class="text-xs text-gray-400 mt-1">Hold Ctrl/Cmd to select multiple</p>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="enhance-profiles" checked class="mr-2">
+                    <label for="enhance-profiles" class="text-sm">Enhance with profile data</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="categorize-builds" checked class="mr-2">
+                    <label for="categorize-builds" class="text-sm">Categorize builds & calculate EHP</label>
+                </div>
+            </div>
+        </div>
+
         <!-- Charts Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <!-- Hourly Requests Chart -->
@@ -128,12 +203,18 @@
         // Global chart instances
         let hourlyChart = null;
         let apiTypeChart = null;
+        
+        // WebSocket connection
+        const socket = io();
 
         // Refresh data every 30 seconds
         setInterval(refreshData, 30000);
         
         // Initial load
         refreshData();
+        
+        // Load scraping status
+        loadScrapingStatus();
 
         async function refreshData() {
             try {
@@ -356,6 +437,151 @@
                 container.appendChild(div);
             }
         }
+
+        // Scraping control functions
+        async function loadScrapingStatus() {
+            try {
+                const response = await fetch('/api/scraping/status');
+                const data = await response.json();
+                
+                // Populate league options
+                const leagueSelect = document.getElementById('league-select');
+                data.available_leagues.forEach(league => {
+                    const option = document.createElement('option');
+                    option.value = league;
+                    option.textContent = league;
+                    leagueSelect.appendChild(option);
+                });
+                
+                // Update UI with current status
+                updateScrapingUI(data);
+                
+            } catch (error) {
+                console.error('Error loading scraping status:', error);
+            }
+        }
+
+        async function startScraping() {
+            const leagueSelect = document.getElementById('league-select');
+            const selectedLeagues = Array.from(leagueSelect.selectedOptions).map(opt => opt.value).filter(v => v);
+            
+            const options = {
+                leagues: selectedLeagues.length > 0 ? selectedLeagues : null,
+                enhance_profiles: document.getElementById('enhance-profiles').checked,
+                categorize_builds: document.getElementById('categorize-builds').checked
+            };
+            
+            try {
+                const response = await fetch('/api/scraping/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(options)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Successfully started
+                    showNotification('Collection started successfully!', 'success');
+                } else {
+                    showNotification(result.error || 'Failed to start collection', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error starting scraping:', error);
+                showNotification('Error starting collection', 'error');
+            }
+        }
+
+        function updateScrapingUI(data) {
+            const activeTask = data.active_task;
+            const activeTaskDiv = document.getElementById('active-task');
+            const startBtn = document.getElementById('start-scraping-btn');
+            const optionsDiv = document.getElementById('collection-options');
+            
+            if (activeTask) {
+                // Show active task
+                activeTaskDiv.classList.remove('hidden');
+                startBtn.disabled = true;
+                startBtn.textContent = 'Collection Running...';
+                optionsDiv.style.opacity = '0.5';
+                
+                // Update progress
+                document.getElementById('current-step').textContent = activeTask.current_step || 'Processing...';
+                document.getElementById('progress-text').textContent = `${activeTask.progress_percentage.toFixed(1)}%`;
+                document.getElementById('progress-bar').style.width = `${activeTask.progress_percentage}%`;
+                document.getElementById('current-league').textContent = activeTask.current_league || '-';
+                document.getElementById('characters-collected').textContent = activeTask.characters_collected.toLocaleString();
+                document.getElementById('characters-enhanced').textContent = activeTask.characters_enhanced.toLocaleString();
+                document.getElementById('current-operation').textContent = activeTask.current_operation || 'Processing...';
+                
+                // Format elapsed time
+                if (activeTask.elapsed_time) {
+                    const minutes = Math.floor(activeTask.elapsed_time / 60);
+                    const seconds = Math.floor(activeTask.elapsed_time % 60);
+                    document.getElementById('elapsed-time').textContent = `${minutes}m ${seconds}s`;
+                }
+                
+                // Update status badge
+                const statusBadge = document.getElementById('task-status');
+                statusBadge.textContent = activeTask.status;
+                statusBadge.className = `px-2 py-1 rounded text-xs ${getStatusColor(activeTask.status)}`;
+                
+            } else {
+                // Hide active task
+                activeTaskDiv.classList.add('hidden');
+                startBtn.disabled = false;
+                startBtn.textContent = 'Start Collection';
+                optionsDiv.style.opacity = '1';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'running': return 'bg-blue-600';
+                case 'completed': return 'bg-green-600';
+                case 'failed': return 'bg-red-600';
+                case 'cancelled': return 'bg-gray-600';
+                default: return 'bg-gray-600';
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-600' : 
+                type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+            } text-white`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // WebSocket event handlers
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+
+        socket.on('scraping_update', function(data) {
+            if (data.active_task) {
+                updateScrapingUI(data);
+            } else {
+                // No active task, refresh status
+                loadScrapingStatus();
+            }
+        });
+
+        socket.on('disconnect', function() {
+            console.log('Disconnected from server');
+        });
     </script>
 </body>
 </html>
