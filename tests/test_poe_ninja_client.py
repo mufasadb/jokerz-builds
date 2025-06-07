@@ -55,9 +55,10 @@ class TestPoeNinjaClient:
         
         responses.add(
             responses.GET,
-            "https://poe.ninja/api/data/GetCurrencyOverview",
+            "https://poe.ninja/api/data/currencyoverview",
             json=mock_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         result = client.get_currency_overview()
@@ -78,7 +79,8 @@ class TestPoeNinjaClient:
             responses.GET,
             "https://poe.ninja/api/data/itemoverview",
             json=mock_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         result = client.get_item_overview("UniqueBelt")
@@ -90,18 +92,19 @@ class TestPoeNinjaClient:
     def test_failed_request_returns_none(self, client):
         responses.add(
             responses.GET,
-            "https://poe.ninja/api/data/GetCurrencyOverview",
-            status=404
+            "https://poe.ninja/api/data/currencyoverview",
+            status=404,
+            match_querystring=False
         )
         
         result = client.get_currency_overview()
         assert result is None
     
     def test_cache_functionality(self, client):
-        mock_data = {"lines": [{"test": "data"}]}
+        mock_data = {"lines": [{"test": "data"}], "currencyDetails": []}
         
-        # Manually add to cache
-        cache_key = "GetCurrencyOverview_{'league': 'TestLeague'}"
+        # Manually add to cache with correct key format
+        cache_key = "currencyoverview_{'league': 'TestLeague', 'type': 'Currency'}"
         client._cache[cache_key] = mock_data
         client._cache_timestamps[cache_key] = datetime.now()
         
@@ -112,8 +115,8 @@ class TestPoeNinjaClient:
     def test_cache_expiration(self, client):
         mock_data = {"lines": [{"test": "old_data"}]}
         
-        # Add expired cache entry
-        cache_key = "GetCurrencyOverview_{'league': 'TestLeague'}"
+        # Add expired cache entry with correct key format
+        cache_key = "currencyoverview_{'league': 'TestLeague', 'type': 'Currency'}"
         client._cache[cache_key] = mock_data
         client._cache_timestamps[cache_key] = datetime.now() - timedelta(hours=3)
         
@@ -130,16 +133,18 @@ class TestPoeNinjaClient:
         
         responses.add(
             responses.GET,
-            "https://poe.ninja/api/data/GetCurrencyOverview",
+            "https://poe.ninja/api/data/currencyoverview",
             json=mock_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         responses.add(
             responses.GET,
             "https://poe.ninja/api/data/itemoverview",
             json=mock_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         # First request should succeed
@@ -178,16 +183,18 @@ class TestEndToEnd:
         
         responses.add(
             responses.GET,
-            "https://poe.ninja/api/data/GetCurrencyOverview",
+            "https://poe.ninja/api/data/currencyoverview",
             json=currency_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         responses.add(
             responses.GET,
             "https://poe.ninja/api/data/itemoverview",
             json=item_response,
-            status=200
+            status=200,
+            match_querystring=False
         )
         
         # Fetch currency data
