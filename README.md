@@ -5,6 +5,7 @@ A comprehensive data collection and analysis system for Path of Exile builds, fe
 ![Docker Pulls](https://img.shields.io/docker/pulls/callmebeachy/jokerz-builds)
 ![Docker Image Size](https://img.shields.io/docker/image-size/callmebeachy/jokerz-builds)
 ![GitHub Actions](https://github.com/mufasadb/jokerz-builds/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)
+![GitHub Stars](https://img.shields.io/github/stars/mufasadb/jokerz-builds)
 
 ## Features
 
