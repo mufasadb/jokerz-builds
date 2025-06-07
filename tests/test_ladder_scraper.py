@@ -64,7 +64,30 @@ class TestLadderScraper:
         """Test successful snapshot collection"""
         # Mock the ladder client directly on the scraper instance
         mock_client = Mock()
-        mock_client.get_full_ladder.return_value = sample_ladder_data["data"]
+        # Return data in PoE API format (not converted format)
+        api_format_data = [
+            {
+                "account": {"name": "TestAccount1"},
+                "character": {
+                    "name": "TestChar1",
+                    "level": 95,
+                    "experience": 5000000,
+                    "class": "Witch"
+                },
+                "depth": 600
+            },
+            {
+                "account": {"name": "TestAccount2"},
+                "character": {
+                    "name": "TestChar2",
+                    "level": 98,
+                    "experience": 8000000,
+                    "class": "Marauder"
+                },
+                "depth": 400
+            }
+        ]
+        mock_client.get_full_ladder.return_value = api_format_data
         scraper.ladder_client = mock_client
         
         # Test collection
@@ -244,7 +267,30 @@ class TestLadderScraper:
         """Test collecting snapshots for all leagues"""
         # Mock client
         mock_client = Mock()
-        mock_client.get_full_ladder.return_value = sample_ladder_data["data"]
+        # Return data in PoE API format (not converted format)
+        api_format_data = [
+            {
+                "account": {"name": "TestAccount1"},
+                "character": {
+                    "name": "TestChar1",
+                    "level": 95,
+                    "experience": 5000000,
+                    "class": "Witch"
+                },
+                "depth": 600
+            },
+            {
+                "account": {"name": "TestAccount2"},
+                "character": {
+                    "name": "TestChar2",
+                    "level": 98,
+                    "experience": 8000000,
+                    "class": "Marauder"
+                },
+                "depth": 400
+            }
+        ]
+        mock_client.get_full_ladder.return_value = api_format_data
         scraper.ladder_client = mock_client
         
         # Override leagues for testing
