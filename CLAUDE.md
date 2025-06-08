@@ -31,6 +31,8 @@ Where utilising libraries pick those that are most popular and recently updated 
 ## Git Workflow
 
 ALWAYS commit changes after completing and testing each task.
+ALWAYS push to remote repository after completing a feature or major fix.
 Use descriptive commit messages that explain what was implemented.
 We can always roll back if needed, so commit frequently to save progress.
 This ensures work is preserved and allows for easy rollbacks if needed.
+Push regularly to keep remote repository up to date with completed work.
