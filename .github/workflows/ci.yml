@@ -51,6 +51,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     
     steps:
     - name: Checkout repository
@@ -74,7 +76,8 @@ jobs:
         tags: |
           type=ref,event=branch
           type=ref,event=pr
-          type=sha
+          type=sha,prefix={{branch}}-
+          type=raw,value={{sha}}
           type=raw,value=latest,enable={{is_default_branch}}
     
     - name: Build and push Docker image
@@ -97,7 +100,7 @@ jobs:
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        image-ref: ${{ needs.build.outputs.image }}
         format: 'sarif'
         output: 'trivy-results.sarif'
     
