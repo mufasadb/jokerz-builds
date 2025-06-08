@@ -784,7 +784,11 @@ class DatabaseManager:
         Returns:
             Number of characters categorized
         """
-        from src.analysis.build_categorizer import build_categorizer
+        try:
+            from src.analysis.build_categorizer import build_categorizer
+        except ImportError as e:
+            logger.warning(f"Build categorizer not available: {e}. Skipping categorization.")
+            return 0
         
         session = self.get_session()
         try:

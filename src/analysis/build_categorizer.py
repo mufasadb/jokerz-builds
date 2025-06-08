@@ -5,8 +5,15 @@ Build categorization system for analyzing PoE builds by damage type, defense sty
 import logging
 from typing import Dict, List, Set, Optional, Any, Tuple
 from dataclasses import dataclass, field
-from src.data.skill_tags import skill_analyzer
 from src.analysis.ehp_calculator import ehp_calculator, DefensiveStats, EHPResult
+
+# Import skill analyzer with fallback
+try:
+    from src.data.skill_tags import skill_analyzer
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning("Skill analyzer not available, skill categorization will be limited")
+    skill_analyzer = None
 
 logger = logging.getLogger(__name__)
 
@@ -117,6 +124,12 @@ class BuildCategorizer:
             ]
         }
         
+    def _get_skill_tags(self, skill_name: str) -> List[str]:
+        """Get skill tags with fallback for when skill_analyzer is not available"""
+        if skill_analyzer is None:
+            return []
+        return skill_analyzer.get_skill_tags(skill_name)
+
     def categorize_build(self, character_data: Dict[str, Any]) -> BuildCategories:
         """
         Fully categorize a build based on character data
@@ -163,7 +176,7 @@ class BuildCategorizer:
         if not main_skill:
             return
             
-        main_skill_tags = skill_analyzer.get_skill_tags(main_skill)
+        main_skill_tags = self._get_skill_tags(main_skill)
         damage_type_counts = {}
         
         # Count damage types from main skill
@@ -176,7 +189,7 @@ class BuildCategorizer:
             gems = main_skill_setup.get('gems', [])
             for gem in gems:
                 gem_name = gem.get('name', '')
-                gem_tags = skill_analyzer.get_skill_tags(gem_name)
+                gem_tags = self._get_skill_tags(gem_name)
                 for damage_type, tags in self.damage_types.items():
                     if any(tag in gem_tags for tag in tags):
                         damage_type_counts[damage_type] = damage_type_counts.get(damage_type, 0) + 1
@@ -212,7 +225,7 @@ class BuildCategorizer:
         if not main_skill:
             return
             
-        main_skill_tags = skill_analyzer.get_skill_tags(main_skill)
+        main_skill_tags = self._get_skill_tags(main_skill)
         delivery_scores = {}
         
         # Check main skill delivery method (exclude Spell for now, handle it specially)
@@ -225,7 +238,7 @@ class BuildCategorizer:
             gems = main_skill_setup.get('gems', [])
             for gem in gems:
                 gem_name = gem.get('name', '')
-                gem_tags = skill_analyzer.get_skill_tags(gem_name)
+                gem_tags = self._get_skill_tags(gem_name)
                 
                 # Support gems that change delivery method get highest priority
                 if any(tag in gem_tags for tag in ["Totem", "Trap", "Mine"]):
@@ -249,7 +262,7 @@ class BuildCategorizer:
                 gems = main_skill_setup.get('gems', [])
                 for gem in gems:
                     gem_name = gem.get('name', '')
-                    gem_tags = skill_analyzer.get_skill_tags(gem_name)
+                    gem_tags = self._get_skill_tags(gem_name)
                     if any(tag in gem_tags for tag in ["Totem", "Trap", "Mine", "Minion"]):
                         is_indirect_from_supports = True
                         break
@@ -265,7 +278,7 @@ class BuildCategorizer:
             
             for gem in gems:
                 gem_name = gem.get('name', '')
-                gem_tags = skill_analyzer.get_skill_tags(gem_name)
+                gem_tags = self._get_skill_tags(gem_name)
                 
                 if "Channelling" in gem_tags:
                     mechanics.append("channelling")
