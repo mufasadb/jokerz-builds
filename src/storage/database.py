@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Float, Boolean, JSON
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import logging
 
@@ -181,9 +181,18 @@ class DatabaseManager:
             database_url: Database connection string. If None, uses SQLite with default path
         """
         if database_url is None:
-            db_path = os.getenv('DB_PATH', '/app/data/ladder_snapshots.db')
+            # Use a more portable default path for tests and development
+            default_path = os.path.join(os.getcwd(), 'data', 'ladder_snapshots.db')
+            db_path = os.getenv('DB_PATH', default_path)
             # Ensure directory exists
-            os.makedirs(os.path.dirname(db_path), exist_ok=True)
+            try:
+                os.makedirs(os.path.dirname(db_path), exist_ok=True)
+            except PermissionError:
+                # Fallback to a temporary path if we can't create the directory
+                import tempfile
+                temp_dir = tempfile.gettempdir()
+                db_path = os.path.join(temp_dir, 'ladder_snapshots.db')
+                logger.warning(f"Permission denied for {db_path}, using temporary path: {db_path}")
             database_url = f"sqlite:///{db_path}"
         
         self.engine = create_engine(database_url, echo=False)

@@ -85,38 +85,51 @@ class RateLimitManager:
             raise ValueError(f"Unknown API type: {api_type}")
         
         limits = self.limits[api_type]
-        now = datetime.now()
+        max_wait_cycles = 10  # Prevent infinite loops
+        cycles = 0
         
-        # Clean old requests from history
-        self._clean_request_history(api_type, now)
+        while cycles < max_wait_cycles:
+            now = datetime.now()
+            
+            # Clean old requests from history
+            self._clean_request_history(api_type, now)
+            
+            # Check daily limit
+            today_requests = [req for req in self.request_history[api_type] 
+                             if (now - req).total_seconds() < 86400]  # 24 hours
+            
+            if len(today_requests) >= limits.requests_per_day:
+                logger.warning(f"{api_type} API daily limit ({limits.requests_per_day}) reached")
+                return False
+            
+            # Check hourly limit
+            hour_requests = [req for req in self.request_history[api_type]
+                            if (now - req).total_seconds() < 3600]  # 1 hour
+            
+            if len(hour_requests) >= limits.requests_per_hour:
+                wait_time = 3600 - (now - min(hour_requests)).total_seconds()
+                logger.info(f"{api_type} API hourly limit reached. Waiting {wait_time:.1f} seconds")
+                time.sleep(min(wait_time, 60))  # Cap wait time to 60 seconds per cycle
+                cycles += 1
+                continue
+            
+            # Check minute limit
+            minute_requests = [req for req in self.request_history[api_type]
+                              if (now - req).total_seconds() < 60]  # 1 minute
+            
+            if len(minute_requests) >= limits.requests_per_minute:
+                wait_time = 60 - (now - min(minute_requests)).total_seconds()
+                logger.info(f"{api_type} API minute limit reached. Waiting {wait_time:.1f} seconds")
+                time.sleep(min(wait_time + 1, 61))  # Cap wait time and add safety margin
+                cycles += 1
+                continue
+            
+            # If we reach here, no rate limits are hit
+            break
         
-        # Check daily limit
-        today_requests = [req for req in self.request_history[api_type] 
-                         if (now - req).total_seconds() < 86400]  # 24 hours
-        
-        if len(today_requests) >= limits.requests_per_day:
-            logger.warning(f"{api_type} API daily limit ({limits.requests_per_day}) reached")
-            return False
-        
-        # Check hourly limit
-        hour_requests = [req for req in self.request_history[api_type]
-                        if (now - req).total_seconds() < 3600]  # 1 hour
-        
-        if len(hour_requests) >= limits.requests_per_hour:
-            wait_time = 3600 - (now - min(hour_requests)).total_seconds()
-            logger.info(f"{api_type} API hourly limit reached. Waiting {wait_time:.1f} seconds")
-            time.sleep(wait_time)
-            return self.wait_for_request(api_type)  # Recursive check
-        
-        # Check minute limit
-        minute_requests = [req for req in self.request_history[api_type]
-                          if (now - req).total_seconds() < 60]  # 1 minute
-        
-        if len(minute_requests) >= limits.requests_per_minute:
-            wait_time = 60 - (now - min(minute_requests)).total_seconds()
-            logger.info(f"{api_type} API minute limit reached. Waiting {wait_time:.1f} seconds")
-            time.sleep(wait_time + 1)  # Extra second for safety
-            return self.wait_for_request(api_type)  # Recursive check
+        if cycles >= max_wait_cycles:
+            logger.error(f"{api_type} API rate limiting exceeded max wait cycles, proceeding anyway")
+            return True
         
         # Calculate delay based on base delay + failure backoff
         base_delay = limits.base_delay
