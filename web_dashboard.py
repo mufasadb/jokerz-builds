@@ -369,4 +369,4 @@ if __name__ == '__main__':
     os.makedirs('templates', exist_ok=True)
     
     # Run the dashboard with SocketIO
-    socketio.run(app, host='0.0.0.0', port=5001, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5001, debug=True, allow_unsafe_werkzeug=True)
