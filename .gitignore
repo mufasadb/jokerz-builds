@@ -61,3 +61,9 @@ Thumbs.db
 # Debug files
 debug_*.json
 debug_*.txt
+timing_*.py
+profile_*.py
+
+# Test artifacts
+test_output/
+*.test
