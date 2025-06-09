@@ -64,7 +64,7 @@ Search for "Joker Builds" in Community Applications
 **Port Mappings (Add Port):**
 | Container Port | Host Port | Description |
 |----------------|-----------|-------------|
-| 5000 | 5000 | Web Dashboard |
+| 5001 | 5001 | Web Dashboard |
 
 **Path Mappings (Add Path):**
 | Container Path | Host Path | Access Mode | Description |
@@ -122,7 +122,7 @@ services:
       - ./data:/app/data  # Shared with collector
     
     ports:
-      - "5000:5000"
+      - "5001:5001"
     
     command: python web_dashboard.py
     
@@ -156,7 +156,7 @@ Collection runs at UTC time. Common conversions:
 
 ## Web Dashboard
 
-Access at: `http://[UNRAID-IP]:5000`
+Access at: `http://[UNRAID-IP]:5001`
 
 ### Dashboard Features
 
@@ -289,7 +289,7 @@ SELECT tankiness_rating, COUNT(*) FROM characters
 ### Manual Operations
 
 **Via Web Dashboard (Recommended):**
-- Navigate to `http://[UNRAID-IP]:5000`
+- Navigate to `http://[UNRAID-IP]:5001`
 - Use the "Data Collection Control" panel
 - Select leagues and options
 - Click "Start Collection"
@@ -347,10 +347,10 @@ chmod -R 755 /mnt/user/appdata/joker-builds
 - Ensure correct time zone understanding (UTC)
 
 ### Dashboard Not Loading
-- Check port 5000 is free: `netstat -tulpn | grep 5000`
+- Check port 5001 is free: `netstat -tulpn | grep 5001`
 - Verify dashboard container is running
 - Check firewall settings
-- Try `http://localhost:5000` from Unraid terminal
+- Try `http://localhost:5001` from Unraid terminal
 
 ### High Memory Usage
 - Reduce `CLEANUP_DAYS` to store less history
