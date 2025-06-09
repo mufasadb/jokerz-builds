@@ -64,7 +64,7 @@ class TaskProgress:
 
 
 class TaskManager:
-    """Manages background scraping tasks"""
+    """Manages background scraping tasks with persistent state"""
     
     def __init__(self):
         self.tasks: Dict[str, TaskProgress] = {}
@@ -73,6 +73,13 @@ class TaskManager:
         self.is_running = False
         self.current_task: Optional[TaskProgress] = None
         self._lock = threading.Lock()
+        
+        # Initialize database connection for persistence
+        from src.storage.database import DatabaseManager
+        self.db = DatabaseManager()
+        
+        # Restore any pending tasks from database on startup
+        self._restore_tasks_from_database()
         
     def start_worker(self):
         """Start the background worker thread"""
@@ -93,7 +100,8 @@ class TaskManager:
     
     def submit_collection_task(self, leagues: List[str] = None, 
                              enhance_profiles: bool = True,
-                             categorize_builds: bool = True) -> str:
+                             categorize_builds: bool = True,
+                             collection_mode: str = "balanced") -> str:
         """
         Submit a new collection task
         
@@ -101,6 +109,7 @@ class TaskManager:
             leagues: List of leagues to collect (None for all)
             enhance_profiles: Whether to enhance with profile data
             categorize_builds: Whether to categorize builds
+            collection_mode: Collection aggressiveness (conservative/balanced/aggressive)
             
         Returns:
             Task ID
@@ -132,20 +141,27 @@ class TaskManager:
         with self._lock:
             self.tasks[task_id] = task
         
+        # Persist task to database
+        self._persist_task_to_database(
+            task, collection_mode, leagues, enhance_profiles, categorize_builds
+        )
+        
         # Add to queue
-        self.task_queue.put({
+        task_info = {
             'task_id': task_id,
             'type': 'collection',
             'leagues': leagues,
             'enhance_profiles': enhance_profiles,
-            'categorize_builds': categorize_builds
-        })
+            'categorize_builds': categorize_builds,
+            'collection_mode': collection_mode
+        }
+        self.task_queue.put((task_id, task_info))
         
         # Start worker if not running
         if not self.is_running:
             self.start_worker()
         
-        logger.info(f"Submitted collection task {task_id} for leagues: {leagues}")
+        logger.info(f"Submitted collection task {task_id} for leagues: {leagues} (mode: {collection_mode})")
         return task_id
     
     def get_task_status(self, task_id: str) -> Optional[TaskProgress]:
@@ -177,9 +193,15 @@ class TaskManager:
         while self.is_running:
             try:
                 # Get next task (with timeout to allow checking is_running)
-                task_info = self.task_queue.get(timeout=1)
+                task_data = self.task_queue.get(timeout=1)
                 
-                task_id = task_info['task_id']
+                # Handle both old and new queue formats
+                if isinstance(task_data, tuple):
+                    task_id, task_info = task_data
+                else:
+                    # Old format compatibility
+                    task_info = task_data
+                    task_id = task_info['task_id']
                 with self._lock:
                     task = self.tasks.get(task_id)
                 
@@ -218,8 +240,9 @@ class TaskManager:
         leagues = task_info['leagues']
         enhance_profiles = task_info['enhance_profiles']
         categorize_builds = task_info['categorize_builds']
+        collection_mode = task_info.get('collection_mode', 'balanced')
         
-        scraper = LadderScraper()
+        scraper = LadderScraper(collection_mode=collection_mode)
         db = DatabaseManager()
         
         task.current_step = "Initializing collection"
@@ -276,6 +299,116 @@ class TaskManager:
         
         task.current_step = "Collection completed"
         task.completed_steps = task.total_steps
+    
+    def _restore_tasks_from_database(self):
+        """Restore pending/running tasks from database on startup"""
+        try:
+            from src.storage.database import TaskState
+            session = self.db.get_session()
+            
+            # Find tasks that were running when the system stopped
+            pending_tasks = session.query(TaskState).filter(
+                TaskState.status.in_(['pending', 'running'])
+            ).all()
+            
+            for db_task in pending_tasks:
+                # Check if task is stale (no heartbeat for 5+ minutes)
+                if (db_task.last_heartbeat and 
+                    (datetime.utcnow() - db_task.last_heartbeat).total_seconds() > 300):
+                    logger.info(f"Marking stale task {db_task.task_id} as failed")
+                    db_task.status = 'failed'
+                    db_task.error_message = 'Task was interrupted by system restart'
+                    db_task.completed_at = datetime.utcnow()
+                    continue
+                
+                # Restore task to memory
+                task = self._db_task_to_progress(db_task)
+                self.tasks[task.task_id] = task
+                
+                # Re-queue pending tasks
+                if db_task.status == 'pending':
+                    task_info = {
+                        'type': 'collection',
+                        'leagues': db_task.leagues or [],
+                        'enhance_profiles': db_task.enhance_profiles,
+                        'categorize_builds': db_task.categorize_builds,
+                        'collection_mode': db_task.collection_mode
+                    }
+                    self.task_queue.put((task.task_id, task_info))
+                    logger.info(f"Restored pending task {task.task_id}")
+            
+            session.commit()
+            session.close()
+            
+        except Exception as e:
+            logger.error(f"Error restoring tasks from database: {e}")
+    
+    def _persist_task_to_database(self, task: TaskProgress, 
+                                  collection_mode: str = "balanced",
+                                  leagues: List[str] = None,
+                                  enhance_profiles: bool = True,
+                                  categorize_builds: bool = True):
+        """Save task state to database"""
+        try:
+            from src.storage.database import TaskState
+            session = self.db.get_session()
+            
+            # Check if task already exists
+            db_task = session.query(TaskState).filter(
+                TaskState.task_id == task.task_id
+            ).first()
+            
+            if not db_task:
+                db_task = TaskState(task_id=task.task_id)
+                session.add(db_task)
+            
+            # Update task state
+            db_task.status = task.status.value
+            db_task.started_at = task.started_at
+            db_task.completed_at = task.completed_at
+            db_task.leagues = leagues or []
+            db_task.enhance_profiles = enhance_profiles
+            db_task.categorize_builds = categorize_builds
+            db_task.collection_mode = collection_mode
+            db_task.current_step = task.current_step
+            db_task.total_steps = task.total_steps
+            db_task.completed_steps = task.completed_steps
+            db_task.current_league = task.current_league
+            db_task.current_operation = task.current_operation
+            db_task.characters_collected = task.characters_collected
+            db_task.characters_enhanced = task.characters_enhanced
+            db_task.characters_categorized = task.characters_categorized
+            db_task.leagues_completed = task.leagues_completed
+            db_task.error_message = task.error_message
+            db_task.warnings = task.warnings
+            db_task.last_heartbeat = datetime.utcnow()
+            
+            session.commit()
+            session.close()
+            
+        except Exception as e:
+            logger.error(f"Error persisting task {task.task_id}: {e}")
+    
+    def _db_task_to_progress(self, db_task) -> TaskProgress:
+        """Convert database task to TaskProgress object"""
+        return TaskProgress(
+            task_id=db_task.task_id,
+            status=TaskStatus(db_task.status),
+            created_at=db_task.created_at,
+            started_at=db_task.started_at,
+            completed_at=db_task.completed_at,
+            current_step=db_task.current_step or "",
+            total_steps=db_task.total_steps or 0,
+            completed_steps=db_task.completed_steps or 0,
+            current_league=db_task.current_league or "",
+            current_operation=db_task.current_operation or "",
+            characters_collected=db_task.characters_collected or 0,
+            characters_enhanced=db_task.characters_enhanced or 0,
+            characters_categorized=db_task.characters_categorized or 0,
+            leagues_completed=db_task.leagues_completed or [],
+            error_message=db_task.error_message,
+            warnings=db_task.warnings or []
+        )
 
 
 # Global task manager instance

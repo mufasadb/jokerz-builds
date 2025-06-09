@@ -25,31 +25,85 @@ class APILimits:
 class RateLimitManager:
     """Centralized rate limiting for all PoE API endpoints"""
     
-    def __init__(self):
-        # Scaled limits for comprehensive data collection
-        self.limits = {
-            "ladder": APILimits(
-                requests_per_minute=4,     # Very respectful rate
-                requests_per_hour=15,      # Spread over 8+ hours
-                requests_per_day=500,      # Ample for 72 needed calls
-                base_delay=15.0,           # Respectful 15s delay
-                max_delay=60.0
-            ),
-            "character": APILimits(
-                requests_per_minute=3,     # Gentle rate for profiles
-                requests_per_hour=12,      # 8+ hours available
-                requests_per_day=1200,     # Target: 800+ enhanced profiles
-                base_delay=20.0,           # Very respectful 20s delay
-                max_delay=120.0
-            ),
-            "ninja": APILimits(
-                requests_per_minute=15,    # PoE Ninja is more lenient
-                requests_per_hour=60,
-                requests_per_day=300,
-                base_delay=4.0,
-                max_delay=30.0
-            )
+    def __init__(self, collection_mode: str = "balanced"):
+        # Rate limiting configurations by collection mode
+        self.collection_mode = collection_mode
+        
+        # Define limits for each mode
+        limit_configs = {
+            "conservative": {
+                "ladder": APILimits(
+                    requests_per_minute=2,     # Very gentle
+                    requests_per_hour=8,       # Extremely respectful
+                    requests_per_day=200,      
+                    base_delay=30.0,           # 30s delay
+                    max_delay=120.0
+                ),
+                "character": APILimits(
+                    requests_per_minute=1,     # Ultra gentle
+                    requests_per_hour=6,       
+                    requests_per_day=600,      
+                    base_delay=60.0,           # 1 min delay
+                    max_delay=300.0
+                ),
+                "ninja": APILimits(
+                    requests_per_minute=10,    
+                    requests_per_hour=40,
+                    requests_per_day=200,
+                    base_delay=6.0,
+                    max_delay=60.0
+                )
+            },
+            "balanced": {
+                "ladder": APILimits(
+                    requests_per_minute=4,     # Respectful rate
+                    requests_per_hour=15,      
+                    requests_per_day=500,      
+                    base_delay=15.0,           # 15s delay
+                    max_delay=60.0
+                ),
+                "character": APILimits(
+                    requests_per_minute=3,     
+                    requests_per_hour=12,      
+                    requests_per_day=1200,     
+                    base_delay=20.0,           # 20s delay
+                    max_delay=120.0
+                ),
+                "ninja": APILimits(
+                    requests_per_minute=15,    
+                    requests_per_hour=60,
+                    requests_per_day=300,
+                    base_delay=4.0,
+                    max_delay=30.0
+                )
+            },
+            "aggressive": {
+                "ladder": APILimits(
+                    requests_per_minute=6,     # Faster rate
+                    requests_per_hour=25,      
+                    requests_per_day=800,      
+                    base_delay=10.0,           # 10s delay
+                    max_delay=45.0
+                ),
+                "character": APILimits(
+                    requests_per_minute=5,     # Faster profiles
+                    requests_per_hour=20,      
+                    requests_per_day=2000,     
+                    base_delay=12.0,           # 12s delay
+                    max_delay=90.0
+                ),
+                "ninja": APILimits(
+                    requests_per_minute=20,    
+                    requests_per_hour=80,
+                    requests_per_day=400,
+                    base_delay=3.0,
+                    max_delay=20.0
+                )
+            }
         }
+        
+        # Use the configured limits for the selected mode
+        self.limits = limit_configs.get(collection_mode, limit_configs["balanced"])
         
         # Track request history
         self.request_history: Dict[str, list] = {
@@ -261,8 +315,12 @@ class RateLimitManager:
         }
 
 
-# Global rate limit manager instance
-rate_limiter = RateLimitManager()
+# Global rate limit manager instance (default balanced mode)
+rate_limiter = RateLimitManager("balanced")
+
+def get_rate_limiter(collection_mode: str = "balanced") -> RateLimitManager:
+    """Get a rate limiter configured for the specified collection mode"""
+    return RateLimitManager(collection_mode)
 
 
 # Example usage

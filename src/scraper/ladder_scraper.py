@@ -33,10 +33,16 @@ class LadderScraper:
         self.backup_to_files = backup_to_files
         self.collection_mode = collection_mode
         
-        # Initialize clients
-        self.ladder_client = PoeLadderClient(save_to_disk=backup_to_files)
-        self.ninja_client = PoeNinjaClient(save_to_disk=backup_to_files)
-        self.character_client = PoECharacterClient()
+        # Initialize clients with collection mode
+        self.ladder_client = PoeLadderClient(
+            save_to_disk=backup_to_files, 
+            collection_mode=collection_mode
+        )
+        self.ninja_client = PoeNinjaClient(
+            save_to_disk=backup_to_files,
+            collection_mode=collection_mode
+        )
+        self.character_client = PoECharacterClient(collection_mode=collection_mode)
         
         if backup_to_files:
             self.data_manager = DataManager()

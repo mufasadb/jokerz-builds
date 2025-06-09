@@ -244,6 +244,7 @@ def start_scraping():
     leagues = data.get('leagues')  # None means all leagues
     enhance_profiles = data.get('enhance_profiles', True)
     categorize_builds = data.get('categorize_builds', True)
+    collection_mode = data.get('collection_mode', 'balanced')
     
     # Check if already running
     active_task = task_manager.get_active_task()
@@ -257,7 +258,8 @@ def start_scraping():
     task_id = task_manager.submit_collection_task(
         leagues=leagues,
         enhance_profiles=enhance_profiles,
-        categorize_builds=categorize_builds
+        categorize_builds=categorize_builds,
+        collection_mode=collection_mode
     )
     
     return jsonify({

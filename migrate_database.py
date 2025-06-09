@@ -17,7 +17,43 @@ def migrate_database(db_path):
     print(f"Migrating database: {db_path}")
     print(f"Started at: {datetime.now()}")
     
-    # List of columns to add with their SQL definitions
+    # Check if task_states table exists, create if not
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='task_states'")
+    if not cursor.fetchone():
+        print("Creating task_states table...")
+        cursor.execute("""
+            CREATE TABLE task_states (
+                id INTEGER NOT NULL,
+                task_id VARCHAR(100) NOT NULL,
+                status VARCHAR(20) NOT NULL,
+                created_at DATETIME,
+                started_at DATETIME,
+                completed_at DATETIME,
+                leagues JSON,
+                enhance_profiles BOOLEAN DEFAULT 1,
+                categorize_builds BOOLEAN DEFAULT 1,
+                collection_mode VARCHAR(20) DEFAULT 'balanced',
+                current_step VARCHAR(200) DEFAULT '',
+                total_steps INTEGER DEFAULT 0,
+                completed_steps INTEGER DEFAULT 0,
+                current_league VARCHAR(50) DEFAULT '',
+                current_operation VARCHAR(100) DEFAULT '',
+                characters_collected INTEGER DEFAULT 0,
+                characters_enhanced INTEGER DEFAULT 0,
+                characters_categorized INTEGER DEFAULT 0,
+                leagues_completed JSON,
+                error_message VARCHAR(1000),
+                warnings JSON,
+                last_heartbeat DATETIME,
+                PRIMARY KEY (id)
+            )
+        """)
+        cursor.execute("CREATE UNIQUE INDEX ix_task_states_task_id ON task_states (task_id)")
+        print("✅ task_states table created")
+    else:
+        print("task_states table already exists")
+    
+    # List of columns to add with their SQL definitions for characters table
     new_columns = [
         # Build categorization data
         ("primary_damage_type", "VARCHAR(50)"),

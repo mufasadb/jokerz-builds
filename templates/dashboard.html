@@ -161,6 +161,15 @@
                     <input type="checkbox" id="categorize-builds" checked class="mr-2">
                     <label for="categorize-builds" class="text-sm">Categorize builds & calculate EHP</label>
                 </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Collection Mode</label>
+                    <select id="collection-mode" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm">
+                        <option value="conservative">Conservative (1k chars, slower)</option>
+                        <option value="balanced" selected>Balanced (2k chars, normal)</option>
+                        <option value="aggressive">Aggressive (2.5k chars, faster)</option>
+                    </select>
+                    <p class="text-xs text-gray-400 mt-1">Conservative: Gentle on APIs, Aggressive: More data but higher rate limits</p>
+                </div>
             </div>
         </div>
 
@@ -501,7 +510,8 @@
             const options = {
                 leagues: selectedLeagues.length > 0 ? selectedLeagues : null,
                 enhance_profiles: document.getElementById('enhance-profiles').checked,
-                categorize_builds: document.getElementById('categorize-builds').checked
+                categorize_builds: document.getElementById('categorize-builds').checked,
+                collection_mode: document.getElementById('collection-mode').value
             };
             
             try {

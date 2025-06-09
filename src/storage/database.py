@@ -170,6 +170,44 @@ class SnapshotMetrics(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class TaskState(Base):
+    """Table for persisting task state across restarts"""
+    __tablename__ = 'task_states'
+    
+    id = Column(Integer, primary_key=True)
+    task_id = Column(String(100), unique=True, nullable=False, index=True)
+    status = Column(String(20), nullable=False)  # pending, running, completed, failed, cancelled
+    created_at = Column(DateTime, default=datetime.utcnow)
+    started_at = Column(DateTime, nullable=True)
+    completed_at = Column(DateTime, nullable=True)
+    
+    # Task configuration
+    leagues = Column(JSON, nullable=True)  # List of leagues to process
+    enhance_profiles = Column(Boolean, default=True)
+    categorize_builds = Column(Boolean, default=True)
+    collection_mode = Column(String(20), default="balanced")  # conservative, balanced, aggressive
+    
+    # Progress tracking
+    current_step = Column(String(200), default="")
+    total_steps = Column(Integer, default=0)
+    completed_steps = Column(Integer, default=0)
+    current_league = Column(String(50), default="")
+    current_operation = Column(String(100), default="")
+    
+    # Results tracking
+    characters_collected = Column(Integer, default=0)
+    characters_enhanced = Column(Integer, default=0)
+    characters_categorized = Column(Integer, default=0)
+    leagues_completed = Column(JSON, nullable=True)  # List of completed leagues
+    
+    # Error tracking
+    error_message = Column(String(1000), nullable=True)
+    warnings = Column(JSON, nullable=True)  # List of warning messages
+    
+    # Metadata
+    last_heartbeat = Column(DateTime, nullable=True)  # For detecting stalled tasks
+
+
 class DatabaseManager:
     """Manages database connections and operations"""
     
