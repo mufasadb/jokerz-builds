@@ -2,6 +2,9 @@
 Flask web dashboard for Joker Builds monitoring
 """
 
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
+
 from flask import Flask, render_template, jsonify, request
 from flask_socketio import SocketIO, emit
 from datetime import datetime, timedelta
