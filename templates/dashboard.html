@@ -475,6 +475,10 @@
                 
                 // Populate league options
                 const leagueSelect = document.getElementById('league-select');
+                // Clear existing options except "All Leagues"
+                while (leagueSelect.options.length > 1) {
+                    leagueSelect.remove(1);
+                }
                 data.available_leagues.forEach(league => {
                     const option = document.createElement('option');
                     option.value = league;
