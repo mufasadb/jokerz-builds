@@ -20,7 +20,10 @@
       "Bash(git push:*)",
       "Bash(mv:*)",
       "Bash(copy-env-vars)",
-      "Bash(upload-to-s3:*)"
+      "Bash(upload-to-s3:*)",
+      "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraper::test_ci_basic_functionality -v)",
+      "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraper::test_collect_daily_snapshot_success -v)",
+      "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraperIntegration::test_end_to_end_workflow -v)"
     ],
     "deny": []
   }

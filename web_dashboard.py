@@ -7,6 +7,7 @@ from flask_socketio import SocketIO, emit
 from datetime import datetime, timedelta
 from src.storage.database import DatabaseManager
 from src.scheduler.task_manager import task_manager, TaskStatus
+from src.analysis.claude_integration import NaturalLanguageQueryService
 import os
 import threading
 import time
@@ -15,6 +16,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'joker-builds-secret-key'
 socketio = SocketIO(app, cors_allowed_origins="*")
 db = DatabaseManager()
+
+# Initialize Claude query service (requires ANTHROPIC_API_KEY env var)
+claude_api_key = os.getenv('ANTHROPIC_API_KEY')
+query_service = NaturalLanguageQueryService(claude_api_key, db) if claude_api_key else None
 
 
 @app.route('/')
@@ -285,6 +290,72 @@ def broadcast_scraping_updates():
         except Exception as e:
             print(f"Error broadcasting updates: {e}")
             time.sleep(5)
+
+
+@app.route('/api/query', methods=['POST'])
+def natural_language_query():
+    """Handle natural language queries about build data"""
+    if not query_service:
+        return jsonify({
+            'error': 'Claude API not configured. Set ANTHROPIC_API_KEY environment variable.'
+        }), 500
+    
+    data = request.get_json()
+    if not data or 'query' not in data:
+        return jsonify({'error': 'Query text required'}), 400
+    
+    user_query = data['query'].strip()
+    if not user_query:
+        return jsonify({'error': 'Query cannot be empty'}), 400
+    
+    session_id = data.get('session_id', 'web_session')
+    
+    try:
+        # Process the query
+        response = query_service.process_query(user_query, session_id)
+        return jsonify(response)
+        
+    except Exception as e:
+        return jsonify({
+            'error': f'Query processing failed: {str(e)}',
+            'query': user_query
+        }), 500
+
+
+@app.route('/api/query/examples')
+def query_examples():
+    """Get example queries users can try"""
+    examples = [
+        {
+            "text": "What are the best jugg builds at the moment?",
+            "description": "Find top Juggernaut builds in current league"
+        },
+        {
+            "text": "What's an off-meta cold skill?",
+            "description": "Find less popular cold damage skills"
+        },
+        {
+            "text": "Can I have a build with Lightning Strike?",
+            "description": "Find highest level Lightning Strike builds"
+        },
+        {
+            "text": "Is there a cheap cold dot build I could use?",
+            "description": "Find budget cold damage over time builds"
+        },
+        {
+            "text": "Show me tanky witch builds",
+            "description": "Find defensive Witch ascendancy builds"
+        },
+        {
+            "text": "What minion builds are popular?",
+            "description": "Find popular minion-based builds"
+        }
+    ]
+    
+    return jsonify({
+        'examples': examples,
+        'claude_available': query_service is not None
+    })
 
 
 # Start the task manager and background broadcaster

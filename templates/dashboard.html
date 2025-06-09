@@ -164,6 +164,35 @@
             </div>
         </div>
 
+        <!-- Natural Language Query Interface -->
+        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-8">
+            <h2 class="text-xl font-semibold mb-4">Ask About Build Data</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Chat Interface -->
+                <div>
+                    <div id="chat-messages" class="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto mb-4 border-2 border-gray-700">
+                        <div class="text-gray-400 text-sm">Ask questions about build data in natural language...</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="query-input" placeholder="e.g., What are the best jugg builds?" 
+                               class="flex-1 bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none">
+                        <button id="send-query" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            Send
+                        </button>
+                    </div>
+                    <div id="claude-status" class="text-xs text-gray-500 mt-2"></div>
+                </div>
+                
+                <!-- Example Queries -->
+                <div>
+                    <h3 class="text-lg font-medium mb-3">Example Queries</h3>
+                    <div id="example-queries" class="space-y-2">
+                        <div class="text-gray-400 text-sm">Loading examples...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Charts Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <!-- Hourly Requests Chart -->
@@ -582,6 +611,168 @@
         socket.on('disconnect', function() {
             console.log('Disconnected from server');
         });
+
+        // Natural Language Query functionality
+        let sessionId = 'web_' + Math.random().toString(36).substr(2, 9);
+
+        async function loadQueryExamples() {
+            try {
+                const response = await fetch('/api/query/examples');
+                const data = await response.json();
+                
+                const exampleDiv = document.getElementById('example-queries');
+                
+                if (!data.claude_available) {
+                    exampleDiv.innerHTML = '<div class="text-red-400 text-sm">Claude API not configured. Set ANTHROPIC_API_KEY environment variable.</div>';
+                    document.getElementById('claude-status').textContent = 'Claude API not available';
+                    document.getElementById('send-query').disabled = true;
+                    return;
+                }
+                
+                document.getElementById('claude-status').textContent = 'Claude API ready';
+                
+                exampleDiv.innerHTML = data.examples.map(example => 
+                    `<div class="example-query cursor-pointer p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors" 
+                          data-query="${example.text}">
+                        <div class="font-medium text-sm">${example.text}</div>
+                        <div class="text-xs text-gray-400 mt-1">${example.description}</div>
+                    </div>`
+                ).join('');
+                
+                // Add click handlers to example queries
+                document.querySelectorAll('.example-query').forEach(element => {
+                    element.addEventListener('click', function() {
+                        const query = this.getAttribute('data-query');
+                        document.getElementById('query-input').value = query;
+                        sendQuery();
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Error loading examples:', error);
+                document.getElementById('example-queries').innerHTML = '<div class="text-red-400 text-sm">Error loading examples</div>';
+            }
+        }
+
+        async function sendQuery() {
+            const input = document.getElementById('query-input');
+            const messagesDiv = document.getElementById('chat-messages');
+            const sendButton = document.getElementById('send-query');
+            
+            const query = input.value.trim();
+            if (!query) return;
+            
+            // Clear input and disable button
+            input.value = '';
+            sendButton.disabled = true;
+            sendButton.textContent = 'Sending...';
+            
+            // Add user message
+            addMessage(query, 'user');
+            
+            // Add loading message
+            const loadingId = addMessage('Analyzing your question...', 'assistant', true);
+            
+            try {
+                const response = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        session_id: sessionId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Remove loading message
+                document.getElementById(loadingId).remove();
+                
+                if (data.error) {
+                    addMessage(`Error: ${data.error}`, 'error');
+                } else {
+                    // Add summary
+                    addMessage(data.summary, 'assistant');
+                    
+                    // Add results if any
+                    if (data.results && data.results.length > 0) {
+                        const resultsHtml = formatResults(data.results, data.count);
+                        addMessage(resultsHtml, 'results');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Query error:', error);
+                document.getElementById(loadingId).remove();
+                addMessage('Failed to process query. Please try again.', 'error');
+            } finally {
+                sendButton.disabled = false;
+                sendButton.textContent = 'Send';
+            }
+        }
+
+        function addMessage(content, type, isLoading = false) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            
+            const messageElement = document.createElement('div');
+            messageElement.id = messageId;
+            messageElement.className = `mb-3 ${type === 'user' ? 'text-right' : 'text-left'}`;
+            
+            const bubbleClass = type === 'user' ? 'bg-blue-600 text-white ml-auto' : 
+                               type === 'error' ? 'bg-red-600 text-white' :
+                               type === 'results' ? 'bg-gray-700 text-gray-100' :
+                               'bg-gray-700 text-gray-100';
+            
+            const bubble = document.createElement('div');
+            bubble.className = `inline-block p-3 rounded-lg max-w-md ${bubbleClass} ${isLoading ? 'loading' : ''}`;
+            
+            if (type === 'results') {
+                bubble.innerHTML = content;
+            } else {
+                bubble.textContent = content;
+            }
+            
+            messageElement.appendChild(bubble);
+            messagesDiv.appendChild(messageElement);
+            
+            // Scroll to bottom
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            return messageId;
+        }
+
+        function formatResults(results, totalCount) {
+            let html = `<div class="text-sm font-medium mb-2">Top ${results.length}${totalCount > results.length ? ` of ${totalCount}` : ''} results:</div>`;
+            
+            results.forEach((result, index) => {
+                html += `
+                    <div class="border-l-2 border-blue-500 pl-3 mb-3 last:mb-0">
+                        <div class="font-medium">${result.name} (${result.account})</div>
+                        <div class="text-xs text-gray-400">Level ${result.level} ${result.ascendancy || result.class}</div>
+                        ${result.main_skill ? `<div class="text-xs">Main: ${result.main_skill}</div>` : ''}
+                        ${result.primary_damage_type ? `<div class="text-xs">Damage: ${result.primary_damage_type}</div>` : ''}
+                        ${result.cost_tier ? `<div class="text-xs">Cost: ${result.cost_tier}</div>` : ''}
+                        <div class="text-xs text-gray-500">League: ${result.league}</div>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+
+        // Event listeners for chat
+        document.getElementById('send-query').addEventListener('click', sendQuery);
+        document.getElementById('query-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendQuery();
+            }
+        });
+
+        // Load examples on page load
+        loadQueryExamples();
     </script>
 </body>
 </html>
