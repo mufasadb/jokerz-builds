@@ -24,7 +24,12 @@
       "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraper::test_ci_basic_functionality -v)",
       "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraper::test_collect_daily_snapshot_success -v)",
       "Bash(GITHUB_ACTIONS=true python -m pytest tests/test_ladder_scraper.py::TestLadderScraperIntegration::test_end_to_end_workflow -v)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(export DB_PATH=./data/test_ladder_snapshots.db)",
+      "Bash(timeout:*)",
+      "Bash(git mv:*)",
+      "Bash(git rm:*)",
+      "Bash(tree:*)"
     ],
     "deny": []
   }

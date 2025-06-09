@@ -272,10 +272,13 @@ def scraping_status():
     active_task = task_manager.get_active_task()
     recent_tasks = task_manager.get_all_tasks()[:5]  # Last 5 tasks
     
-    # Get available leagues
+    # Get available leagues (exclude permanent leagues)
     from src.scraper.ladder_scraper import LadderScraper
     scraper = LadderScraper()
-    available_leagues = scraper.leagues_to_monitor
+    available_leagues = [
+        league for league in scraper.leagues_to_monitor 
+        if league not in ["Standard", "Hardcore"]
+    ]
     
     return jsonify({
         'active_task': {

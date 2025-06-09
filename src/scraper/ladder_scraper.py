@@ -56,8 +56,8 @@ class LadderScraper:
         try:
             leagues = self.ladder_client.get_leagues()
             if not leagues:
-                logger.error("No leagues data available")
-                self.leagues_to_monitor = ["Standard", "Hardcore"]
+                logger.error("No leagues data available, no leagues will be monitored")
+                self.leagues_to_monitor = []
                 return
             
             self.leagues_to_monitor = []
@@ -82,8 +82,31 @@ class LadderScraper:
                     break
             
             if not challenge_league_base:
-                logger.warning("Could not find base challenge league")
-                self.leagues_to_monitor = ["Standard", "Hardcore"]
+                logger.warning("Could not find base challenge league from API")
+                # Check if we have recent challenge league data in database
+                try:
+                    session = self.db.get_session()
+                    from src.storage.database import LadderSnapshot
+                    recent_leagues = session.query(LadderSnapshot.league).distinct().all()
+                    session.close()
+                    
+                    # Filter out permanent leagues and get recent challenge leagues
+                    challenge_leagues = []
+                    for (league,) in recent_leagues:
+                        if league not in ["Standard", "Hardcore"]:
+                            challenge_leagues.append(league)
+                    
+                    if challenge_leagues:
+                        self.leagues_to_monitor = challenge_leagues
+                        logger.info(f"Using recent challenge leagues from database: {challenge_leagues}")
+                        return
+                    else:
+                        logger.warning("No challenge leagues found in database either")
+                        
+                except Exception as e:
+                    logger.error(f"Error checking database for leagues: {e}")
+                
+                self.leagues_to_monitor = []
                 return
             
             # Now find all variants of this challenge league
@@ -118,18 +141,14 @@ class LadderScraper:
                 else:
                     league_variants["softcore"] = league_id
             
-            # Add permanent leagues
-            self.leagues_to_monitor.extend(["Standard", "Hardcore"])
-            
-            # Add challenge league variants that exist
+            # Add challenge league variants that exist (no permanent leagues)
             for variant_type, league_id in league_variants.items():
                 if league_id:
                     self.leagues_to_monitor.append(league_id)
                     logger.info(f"Added {variant_type} league: {league_id}")
             
-            # Store league categorization for analysis
+            # Store league categorization for analysis (no permanent leagues)
             self.league_categories = {
-                "permanent": ["Standard", "Hardcore"],
                 "challenge": {}
             }
             
@@ -143,8 +162,8 @@ class LadderScraper:
             
         except Exception as e:
             logger.error(f"Failed to update monitored leagues: {e}")
-            # Fallback to default leagues
-            self.leagues_to_monitor = ["Standard", "Hardcore"]
+            # No fallback - only monitor challenge leagues
+            self.leagues_to_monitor = []
     
     def collect_daily_snapshot(self, league: str, ladder_type: str = "league") -> bool:
         """

@@ -117,8 +117,8 @@ def main():
     parser = argparse.ArgumentParser(description="Joker Builds - PoE Build Analysis")
     parser.add_argument("command", choices=["fetch", "analyze", "compare", "progression"],
                        help="Command to run")
-    parser.add_argument("--league", default="Standard",
-                       help="League to analyze (default: Standard)")
+    parser.add_argument("--league", default="Settlers",
+                       help="League to analyze (default: current challenge league)")
     parser.add_argument("--snapshot1", help="First snapshot for comparison")
     parser.add_argument("--snapshot2", help="Second snapshot for comparison")
     parser.add_argument("--start-date", help="League start date (YYYY-MM-DD) for progression")

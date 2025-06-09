@@ -192,8 +192,8 @@ Access at: `http://[UNRAID-IP]:5001`
 ### What Gets Collected
 
 1. **Leagues Monitored** (Auto-detected)
-   - Standard & Hardcore (permanent)
    - Current challenge league + all variants (SC/HC/SSF)
+   - Excludes permanent leagues (Standard/Hardcore)
 
 2. **Data Per League**
    - Top 2000 characters
