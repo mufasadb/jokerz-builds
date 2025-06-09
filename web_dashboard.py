@@ -2,27 +2,110 @@
 Flask web dashboard for Joker Builds monitoring
 """
 
-from dotenv import load_dotenv
-load_dotenv()  # Load environment variables from .env file
-
-from flask import Flask, render_template, jsonify, request
-from flask_socketio import SocketIO, emit
-from datetime import datetime, timedelta
-from src.storage.database import DatabaseManager
-from src.scheduler.task_manager import task_manager, TaskStatus
-from src.analysis.claude_integration import NaturalLanguageQueryService
+import logging
+import sys
 import os
+import traceback
+from datetime import datetime, timedelta
 import threading
 import time
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'joker-builds-secret-key'
-socketio = SocketIO(app, cors_allowed_origins="*")
-db = DatabaseManager()
+# Set up logging FIRST before any other imports
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('/app/logs/dashboard.log', mode='a') if os.path.exists('/app/logs') else logging.NullHandler()
+    ]
+)
 
-# Initialize Claude query service (requires ANTHROPIC_API_KEY env var)
-claude_api_key = os.getenv('ANTHROPIC_API_KEY')
-query_service = NaturalLanguageQueryService(claude_api_key, db) if claude_api_key else None
+logger = logging.getLogger(__name__)
+
+# Log startup
+logger.info("=" * 60)
+logger.info("JOKER BUILDS DASHBOARD STARTING UP")
+logger.info("=" * 60)
+logger.info(f"Python version: {sys.version}")
+logger.info(f"Current working directory: {os.getcwd()}")
+logger.info(f"Python path: {sys.path[:3]}...")  # Show first 3 entries
+
+try:
+    # Load environment variables
+    logger.info("Loading environment variables from .env file...")
+    from dotenv import load_dotenv
+    load_dotenv()
+    logger.info("✅ Environment variables loaded")
+    
+    # Log important environment variables (without exposing secrets)
+    db_path = os.getenv('DB_PATH', 'default')
+    flask_env = os.getenv('FLASK_ENV', 'development')
+    log_level = os.getenv('LOG_LEVEL', 'INFO')
+    anthropic_key_set = bool(os.getenv('ANTHROPIC_API_KEY'))
+    
+    logger.info(f"Environment variables:")
+    logger.info(f"  - DB_PATH: {db_path}")
+    logger.info(f"  - FLASK_ENV: {flask_env}")
+    logger.info(f"  - LOG_LEVEL: {log_level}")
+    logger.info(f"  - ANTHROPIC_API_KEY: {'SET' if anthropic_key_set else 'NOT SET'}")
+    
+    # Import Flask components
+    logger.info("Importing Flask components...")
+    from flask import Flask, render_template, jsonify, request
+    from flask_socketio import SocketIO, emit
+    logger.info("✅ Flask components imported")
+    
+    # Import project components
+    logger.info("Importing project components...")
+    from src.storage.database import DatabaseManager
+    from src.scheduler.task_manager import task_manager, TaskStatus
+    from src.analysis.claude_integration import NaturalLanguageQueryService
+    logger.info("✅ Project components imported")
+    
+    # Initialize Flask app
+    logger.info("Initializing Flask application...")
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'joker-builds-secret-key'
+    socketio = SocketIO(app, cors_allowed_origins="*")
+    logger.info("✅ Flask application initialized")
+    
+    # Initialize database
+    logger.info("Initializing database connection...")
+    db = DatabaseManager()
+    logger.info("✅ Database connection initialized")
+    
+    # Test database connection
+    logger.info("Testing database connection...")
+    try:
+        session = db.get_session()
+        # Try a simple query to test the connection
+        session.execute("SELECT 1").fetchone()
+        session.close()
+        logger.info("✅ Database connection test successful")
+    except Exception as e:
+        logger.error(f"❌ Database connection test failed: {e}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
+    
+    # Initialize Claude service
+    logger.info("Initializing Claude query service...")
+    claude_api_key = os.getenv('ANTHROPIC_API_KEY')
+    if claude_api_key:
+        try:
+            query_service = NaturalLanguageQueryService(claude_api_key, db)
+            logger.info("✅ Claude query service initialized")
+        except Exception as e:
+            logger.error(f"❌ Claude service initialization failed: {e}")
+            query_service = None
+    else:
+        logger.warning("⚠️ Claude query service disabled - ANTHROPIC_API_KEY not set")
+        query_service = None
+
+except Exception as e:
+    logger.error(f"❌ CRITICAL ERROR during startup: {e}")
+    logger.error(f"Traceback: {traceback.format_exc()}")
+    sys.exit(1)
+
+logger.info("✅ All components initialized successfully")
 
 
 @app.route('/')
@@ -362,14 +445,48 @@ def query_examples():
 
 
 # Start the task manager and background broadcaster
-task_manager.start_worker()
-broadcast_thread = threading.Thread(target=broadcast_scraping_updates, daemon=True)
-broadcast_thread.start()
+logger.info("Starting task manager and background services...")
+try:
+    task_manager.start_worker()
+    logger.info("✅ Task manager started")
+    
+    broadcast_thread = threading.Thread(target=broadcast_scraping_updates, daemon=True)
+    broadcast_thread.start()
+    logger.info("✅ Background broadcaster started")
+except Exception as e:
+    logger.error(f"❌ Error starting background services: {e}")
+    logger.error(f"Traceback: {traceback.format_exc()}")
 
 
 if __name__ == '__main__':
-    # Create templates directory if it doesn't exist
-    os.makedirs('templates', exist_ok=True)
+    logger.info("=" * 60)
+    logger.info("STARTING WEB SERVER")
+    logger.info("=" * 60)
     
-    # Run the dashboard with SocketIO
-    socketio.run(app, host='0.0.0.0', port=5001, debug=True, allow_unsafe_werkzeug=True)
+    try:
+        # Create templates directory if it doesn't exist
+        logger.info("Creating templates directory...")
+        os.makedirs('templates', exist_ok=True)
+        logger.info("✅ Templates directory ready")
+        
+        # Log server configuration
+        logger.info("Server configuration:")
+        logger.info("  - Host: 0.0.0.0")
+        logger.info("  - Port: 5001")
+        logger.info("  - Debug: True")
+        logger.info("  - CORS: Enabled")
+        
+        # Log final status
+        logger.info("=" * 60)
+        logger.info("🚀 DASHBOARD READY TO START")
+        logger.info("📊 Access dashboard at: http://localhost:5001")
+        logger.info("🔍 View logs at: /app/logs/dashboard.log (in container)")
+        logger.info("=" * 60)
+        
+        # Run the dashboard with SocketIO
+        socketio.run(app, host='0.0.0.0', port=5001, debug=True, allow_unsafe_werkzeug=True)
+        
+    except Exception as e:
+        logger.error(f"❌ CRITICAL ERROR starting web server: {e}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        sys.exit(1)
