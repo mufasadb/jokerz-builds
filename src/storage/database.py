@@ -3,9 +3,9 @@ Database models and connection management for ladder snapshots
 """
 
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Float, Boolean, JSON
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Float, Boolean, JSON, func, case
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import logging
@@ -510,7 +510,6 @@ class DatabaseManager:
     
     def cleanup_old_snapshots(self, keep_days: int = 90) -> int:
         """Remove snapshots older than specified days"""
-        from datetime import datetime, timedelta
         
         session = self.get_session()
         try:
@@ -970,8 +969,6 @@ class DatabaseManager:
         """Get request statistics for the dashboard"""
         session = self.get_session()
         try:
-            from sqlalchemy import func, case
-            
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             # Overall stats
@@ -988,7 +985,7 @@ class DatabaseManager:
             by_api_type = session.query(
                 RequestLog.api_type,
                 func.count(RequestLog.id).label('count'),
-                func.sum(case([(RequestLog.success == True, 1)], else_=0)).label('successful')
+                func.sum(case((RequestLog.success == True, 1), else_=0)).label('successful')
             ).filter(
                 RequestLog.timestamp >= cutoff_time
             ).group_by(RequestLog.api_type).all()
@@ -1063,8 +1060,6 @@ class DatabaseManager:
         """Get hourly request counts for charting"""
         session = self.get_session()
         try:
-            from sqlalchemy import func
-            
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
             # SQLite doesn't have date_trunc, so we'll use strftime

@@ -33,16 +33,10 @@ class LadderScraper:
         self.backup_to_files = backup_to_files
         self.collection_mode = collection_mode
         
-        # Initialize clients with collection mode
-        self.ladder_client = PoeLadderClient(
-            save_to_disk=backup_to_files, 
-            collection_mode=collection_mode
-        )
-        self.ninja_client = PoeNinjaClient(
-            save_to_disk=backup_to_files,
-            collection_mode=collection_mode
-        )
-        self.character_client = PoECharacterClient(collection_mode=collection_mode)
+        # Initialize clients 
+        self.ladder_client = PoeLadderClient(save_to_disk=backup_to_files)
+        self.ninja_client = PoeNinjaClient(save_to_disk=backup_to_files)
+        self.character_client = PoECharacterClient()
         
         if backup_to_files:
             self.data_manager = DataManager()
@@ -88,7 +82,7 @@ class LadderScraper:
                     break
             
             if not challenge_league_base:
-                logger.warning("Could not find base challenge league from API")
+                logger.warning("Could not find base challenge league from API - checking database for existing leagues")
                 # Check if we have recent challenge league data in database
                 try:
                     session = self.db.get_session()
@@ -98,8 +92,9 @@ class LadderScraper:
                     
                     # Filter out permanent leagues and get recent challenge leagues
                     challenge_leagues = []
+                    permanent_leagues = ["Standard", "Hardcore", "Solo Self-Found", "Hardcore SSF", "Ruthless", "Hardcore Ruthless", "SSF Ruthless", "Hardcore SSF Ruthless"]
                     for (league,) in recent_leagues:
-                        if league not in ["Standard", "Hardcore"]:
+                        if league not in permanent_leagues:
                             challenge_leagues.append(league)
                     
                     if challenge_leagues:
@@ -107,13 +102,15 @@ class LadderScraper:
                         logger.info(f"Using recent challenge leagues from database: {challenge_leagues}")
                         return
                     else:
-                        logger.warning("No challenge leagues found in database either")
+                        logger.warning("No challenge leagues found in database - using Standard and Hardcore as fallback")
+                        self.leagues_to_monitor = ["Standard", "Hardcore"]
+                        return
                         
                 except Exception as e:
                     logger.error(f"Error checking database for leagues: {e}")
-                
-                self.leagues_to_monitor = []
-                return
+                    logger.info("Defaulting to Standard and Hardcore leagues")
+                    self.leagues_to_monitor = ["Standard", "Hardcore"]
+                    return
             
             # Now find all variants of this challenge league
             league_variants = {
