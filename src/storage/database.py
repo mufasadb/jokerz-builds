@@ -132,6 +132,11 @@ class Character(Base):
     ehp_weighted = Column(Float, nullable=True)
     tankiness_rating = Column(String(50), nullable=True, index=True)  # Extremely Tanky, Very Tanky, etc
     
+    # URL references for build viewing
+    profile_url = Column(String(500), nullable=True)  # Path of Exile profile URL
+    pob_url = Column(String(500), nullable=True)  # Path of Building URL if available
+    ladder_url = Column(String(500), nullable=True)  # Direct ladder link
+    
     # Categorization metadata
     categorization_confidence = Column(JSON, nullable=True)  # Confidence scores for each category
     categorized_at = Column(DateTime, nullable=True)  # When categorization was performed
@@ -299,10 +304,29 @@ class DatabaseManager:
             characters = []
             
             for rank, char_data in enumerate(characters_data, 1):
+                # Generate URLs for the character
+                account_name = char_data.get('account', '')
+                character_name = char_data.get('name', '')
+                
+                profile_url = None
+                ladder_url = None
+                pob_url = None  # PoB URLs need to be manually provided by users
+                
+                if account_name and character_name:
+                    # Path of Exile profile URL
+                    from urllib.parse import quote
+                    profile_url = f"https://www.pathofexile.com/account/view-profile/{quote(account_name)}/characters?characterName={quote(character_name)}"
+                    
+                    # Ladder URL based on ladder type
+                    if ladder_type == "league":
+                        ladder_url = f"https://www.pathofexile.com/ladders/league/{quote(league)}"
+                    elif ladder_type == "delve-solo":
+                        ladder_url = f"https://www.pathofexile.com/ladders/delve-solo/{quote(league)}"
+                
                 character = Character(
                     snapshot_id=snapshot.id,
-                    account=char_data.get('account', ''),
-                    name=char_data.get('name', ''),
+                    account=account_name,
+                    name=character_name,
                     level=char_data.get('level', 0),
                     experience=char_data.get('experience'),
                     class_name=char_data.get('class', ''),
@@ -318,7 +342,10 @@ class DatabaseManager:
                     rank=rank,
                     league=league,
                     snapshot_date=snapshot.snapshot_date,
-                    raw_data=char_data
+                    raw_data=char_data,
+                    profile_url=profile_url,
+                    ladder_url=ladder_url,
+                    pob_url=pob_url
                 )
                 characters.append(character)
             

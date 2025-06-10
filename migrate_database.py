@@ -91,6 +91,11 @@ def migrate_database(db_path):
         # Categorization metadata
         ("categorization_confidence", "JSON"),
         ("categorized_at", "DATETIME"),
+        
+        # URL references for build viewing
+        ("profile_url", "VARCHAR(500)"),
+        ("pob_url", "VARCHAR(500)"),
+        ("ladder_url", "VARCHAR(500)"),
     ]
     
     # Check which columns already exist

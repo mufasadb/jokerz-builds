@@ -762,14 +762,53 @@
             let html = `<div class="text-sm font-medium mb-2">Top ${results.length}${totalCount > results.length ? ` of ${totalCount}` : ''} results:</div>`;
             
             results.forEach((result, index) => {
+                // Use database URLs if available, otherwise create fallback URLs
+                const profileUrl = result.profile_url || `https://www.pathofexile.com/account/view-profile/${encodeURIComponent(result.account)}/characters?characterName=${encodeURIComponent(result.name)}`;
+                const ladderUrl = result.ladder_url;
+                const pobUrl = result.pob_url;
+                
                 html += `
                     <div class="border-l-2 border-blue-500 pl-3 mb-3 last:mb-0">
-                        <div class="font-medium">${result.name} (${result.account})</div>
-                        <div class="text-xs text-gray-400">Level ${result.level} ${result.ascendancy || result.class}</div>
+                        <div class="font-medium">
+                            <a href="${profileUrl}" target="_blank" rel="noopener noreferrer" 
+                               class="text-blue-400 hover:text-blue-300 hover:underline cursor-pointer"
+                               title="View ${result.name}'s profile on pathofexile.com">
+                                ${result.name}
+                            </a> 
+                            <span class="text-gray-300">(${result.account})</span>
+                            <svg class="inline w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </div>
+                        <div class="text-xs text-gray-400 mb-1">Level ${result.level} ${result.ascendancy || result.class}</div>
                         ${result.main_skill ? `<div class="text-xs">Main: ${result.main_skill}</div>` : ''}
                         ${result.primary_damage_type ? `<div class="text-xs">Damage: ${result.primary_damage_type}</div>` : ''}
                         ${result.cost_tier ? `<div class="text-xs">Cost: ${result.cost_tier}</div>` : ''}
-                        <div class="text-xs text-gray-500">League: ${result.league}</div>
+                        ${result.ehp_weighted ? `<div class="text-xs">EHP: ${Math.round(result.ehp_weighted).toLocaleString()}</div>` : ''}
+                        ${result.tankiness_rating ? `<div class="text-xs">Tankiness: ${result.tankiness_rating}</div>` : ''}
+                        <div class="text-xs text-gray-500 mb-2">League: ${result.league}</div>
+                        
+                        <!-- Action Links -->
+                        <div class="flex gap-3 text-xs">
+                            ${ladderUrl ? `
+                                <a href="${ladderUrl}" target="_blank" rel="noopener noreferrer" 
+                                   class="text-green-400 hover:text-green-300 hover:underline flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    </svg>
+                                    View on Ladder
+                                </a>
+                            ` : ''}
+                            ${pobUrl ? `
+                                <a href="${pobUrl}" target="_blank" rel="noopener noreferrer" 
+                                   class="text-purple-400 hover:text-purple-300 hover:underline flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    View PoB
+                                </a>
+                            ` : ''}
+                        </div>
                     </div>
                 `;
             });

@@ -257,9 +257,14 @@ class DataQueryBuilder:
         }
         
         # Add optional fields if they exist
-        for field in ["primary_damage_type", "skill_delivery", "defense_style", "cost_tier", "tankiness_rating"]:
+        for field in ["primary_damage_type", "skill_delivery", "defense_style", "cost_tier", "tankiness_rating", "ehp_weighted"]:
             if hasattr(char, field):
                 result[field] = getattr(char, field)
+        
+        # Add URL fields for clickthrough functionality
+        for url_field in ["profile_url", "ladder_url", "pob_url"]:
+            if hasattr(char, url_field):
+                result[url_field] = getattr(char, url_field)
         
         return result
 
