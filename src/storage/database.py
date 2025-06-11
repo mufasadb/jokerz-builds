@@ -3,9 +3,10 @@ Database models and connection management for ladder snapshots
 """
 
 import os
+import threading
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Float, Boolean, JSON, func, case
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Float, Boolean, JSON, func, case, event
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import logging
@@ -13,6 +14,23 @@ import logging
 logger = logging.getLogger(__name__)
 
 Base = declarative_base()
+
+# Event listener to enable WAL mode for better concurrency
+from sqlalchemy import Engine
+
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    """
+    Enables WAL mode for better concurrency.
+    """
+    cursor = dbapi_connection.cursor()
+    try:
+        cursor.execute("PRAGMA journal_mode=WAL")
+        logger.info("SQLite journal_mode set to WAL.")
+    except Exception as e:
+        logger.error(f"Failed to set journal_mode to WAL: {e}")
+    finally:
+        cursor.close()
 
 
 class LadderSnapshot(Base):
@@ -215,6 +233,15 @@ class TaskState(Base):
 
 class DatabaseManager:
     """Manages database connections and operations"""
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            with cls._lock:
+                if not cls._instance:
+                    cls._instance = super().__new__(cls)
+        return cls._instance
     
     def __init__(self, database_url: Optional[str] = None):
         """
@@ -223,27 +250,40 @@ class DatabaseManager:
         Args:
             database_url: Database connection string. If None, uses SQLite with default path
         """
-        if database_url is None:
-            # Use a more portable default path for tests and development
-            default_path = os.path.join(os.getcwd(), 'data', 'ladder_snapshots.db')
-            db_path = os.getenv('DB_PATH', default_path)
-            # Ensure directory exists
-            try:
-                os.makedirs(os.path.dirname(db_path), exist_ok=True)
-            except PermissionError:
-                # Fallback to a temporary path if we can't create the directory
-                import tempfile
-                temp_dir = tempfile.gettempdir()
-                db_path = os.path.join(temp_dir, 'ladder_snapshots.db')
-                logger.warning(f"Permission denied for {db_path}, using temporary path: {db_path}")
-            database_url = f"sqlite:///{db_path}"
-        
-        self.engine = create_engine(database_url, echo=False)
-        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
-        
-        # Create tables
-        Base.metadata.create_all(bind=self.engine)
-        logger.info(f"Database initialized at {database_url}")
+        if hasattr(self, '_initialized') and self._initialized:
+            return
+            
+        with self._lock:
+            if hasattr(self, '_initialized') and self._initialized:
+                return
+
+            if database_url is None:
+                # Use a more portable default path for tests and development
+                default_path = os.path.join(os.getcwd(), 'data', 'ladder_snapshots.db')
+                db_path = os.getenv('DB_PATH', default_path)
+                # Ensure directory exists
+                try:
+                    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+                except PermissionError:
+                    # Fallback to a temporary path if we can't create the directory
+                    import tempfile
+                    temp_dir = tempfile.gettempdir()
+                    db_path = os.path.join(temp_dir, 'ladder_snapshots.db')
+                    logger.warning(f"Permission denied for {db_path}, using temporary path: {db_path}")
+                database_url = f"sqlite:///{db_path}"
+            
+            self.engine = create_engine(
+                database_url, 
+                echo=False,
+                connect_args={'timeout': 30}  # Increase timeout for concurrent access
+            )
+            self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+            
+            # Create tables
+            Base.metadata.create_all(bind=self.engine)
+            logger.info(f"Database initialized at {database_url}")
+            
+            self._initialized = True
     
     def get_session(self) -> Session:
         """Get a database session"""
