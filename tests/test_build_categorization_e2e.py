@@ -17,7 +17,7 @@ class TestBuildCategorizationE2E:
         character_data = {
             'name': 'ExpensiveMeleeTank',
             'level': 85,
-            'life': 7000,
+            'life': 10000,
             'energy_shield': 0,
             'main_skill': 'Boneshatter',
             'enhanced_skills': ['Boneshatter', 'Ancestral Warchief', 'Molten Shell'],

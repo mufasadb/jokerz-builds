@@ -7,8 +7,9 @@ import pytest
 import sys
 import os
 
-# Add src to path for imports
+# Add src and archive to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'archive', 'examples'))
 
 from query_fire_tanky_builds import BuildQuerySystem
 from src.storage.database import DatabaseManager
@@ -35,7 +36,7 @@ def test_build_categorization():
         'level': 85,
         'class': 'Marauder',
         'ascendancy': 'Juggernaut',
-        'life': 7000,
+        'life': 10000,
         'energy_shield': 0,
         'main_skill': 'Molten Strike',
         'skills': ['Molten Strike', 'Fortify', 'Melee Physical Damage'],

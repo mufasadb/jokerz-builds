@@ -53,6 +53,7 @@ try:
     logger.info("Importing Flask components...")
     from flask import Flask, render_template, jsonify, request
     from flask_socketio import SocketIO, emit
+    from flask_cors import CORS
     logger.info("✅ Flask components imported")
     
     # Import project components
@@ -66,6 +67,7 @@ try:
     logger.info("Initializing Flask application...")
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'joker-builds-secret-key'
+    CORS(app)  # Enable CORS for all routes
     socketio = SocketIO(app, cors_allowed_origins="*")
     logger.info("✅ Flask application initialized")
     
@@ -77,9 +79,10 @@ try:
     # Test database connection
     logger.info("Testing database connection...")
     try:
+        from sqlalchemy import text
         session = db.get_session()
         # Try a simple query to test the connection
-        session.execute("SELECT 1").fetchone()
+        session.execute(text("SELECT 1")).fetchone()
         session.close()
         logger.info("✅ Database connection test successful")
     except Exception as e:
@@ -118,12 +121,12 @@ def dashboard():
 def request_stats():
     """Get request statistics"""
     # Get stats for different time periods
-    stats_24h = db.get_request_stats(hours=24)
-    stats_7d = db.get_request_stats(hours=168)
+    stats_24h = db.get_request_stats(hours=336)
+    stats_7d = db.get_request_stats(hours=336)
     
     return jsonify({
         'last_24_hours': stats_24h,
-        'last_7_days': stats_7d,
+        'last_14_days': stats_7d,
         'timestamp': datetime.utcnow().isoformat()
     })
 
@@ -131,7 +134,7 @@ def request_stats():
 @app.route('/api/stats/hourly')
 def hourly_stats():
     """Get hourly request counts for charting"""
-    hourly_data = db.get_hourly_request_counts(days=7)
+    hourly_data = db.get_hourly_request_counts(days=14)
     
     # Transform data for Chart.js
     chart_data = {}
@@ -158,7 +161,7 @@ def character_stats():
 @app.route('/api/stats/latest-pulls')
 def latest_pulls():
     """Get information about latest successful pulls"""
-    stats_24h = db.get_request_stats(hours=24)
+    stats_24h = db.get_request_stats(hours=336)
     return jsonify({
         'last_successful': stats_24h.get('last_successful', {}),
         'character_links': {
@@ -172,7 +175,7 @@ def latest_pulls():
 @app.route('/api/stats/errors')
 def recent_errors():
     """Get recent errors"""
-    stats_24h = db.get_request_stats(hours=24)
+    stats_24h = db.get_request_stats(hours=336)
     return jsonify({
         'recent_errors': stats_24h.get('recent_errors', [])
     })
