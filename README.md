@@ -367,6 +367,36 @@ pip install -r requirements.txt
 python -m pytest tests/
 ```
 
+### Running Dashboard Locally
+
+To run the web dashboard in development mode:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the dashboard (development mode)
+python web_dashboard.py
+
+# Access dashboard at http://localhost:5001
+```
+
+**Note:** The dashboard requires a SQLite database with collected data. To get data:
+
+1. **Run data collection first:**
+   ```bash
+   python -m src.scheduler.daily_collector --once
+   ```
+
+2. **Or use existing data:** Copy an existing `ladder_snapshots.db` to the `data/` directory
+
+3. **Check database content:**
+   ```bash
+   python check_database_content.py
+   ```
+
+The dashboard will automatically connect to the database at `data/ladder_snapshots.db` and provide the same interface as the production version.
+
 ### Building Locally
 ```bash
 docker build -t jokerz-builds:local .

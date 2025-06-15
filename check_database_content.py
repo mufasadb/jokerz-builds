@@ -27,7 +27,7 @@ def check_database(db_path=None):
         for snap in snapshots:
             time_ago = datetime.utcnow() - snap.created_at
             hours_ago = time_ago.total_seconds() / 3600
-            print(f"  - {snap.league}: {snap.characters_collected} chars, {hours_ago:.1f} hours ago")
+            print(f"  - {snap.league}: {snap.total_characters} chars, {hours_ago:.1f} hours ago")
         
         # Check total characters
         from src.storage.database import Character
@@ -58,11 +58,11 @@ def check_database(db_path=None):
         
         # Check if any characters have been enhanced
         enhanced_chars = session.query(Character).filter(
-            Character.items.isnot(None)
+            Character.enhanced_skills.isnot(None)
         ).count()
         
         categorized_chars = session.query(Character).filter(
-            Character.damage_type.isnot(None)
+            Character.primary_damage_type.isnot(None)
         ).count()
         
         print(f"\nDATA QUALITY:")

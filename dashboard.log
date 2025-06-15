@@ -1,0 +1,1185 @@
+2025-06-13 14:26:50,275 - __main__ - INFO - ============================================================
+2025-06-13 14:26:50,275 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-13 14:26:50,275 - __main__ - INFO - ============================================================
+2025-06-13 14:26:50,275 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-13 14:26:50,276 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-13 14:26:50,276 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-13 14:26:50,276 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-13 14:26:50,292 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-13 14:26:50,292 - __main__ - INFO - Environment variables:
+2025-06-13 14:26:50,292 - __main__ - INFO -   - DB_PATH: default
+2025-06-13 14:26:50,292 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-13 14:26:50,292 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-13 14:26:50,292 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-13 14:26:50,292 - __main__ - INFO - Importing Flask components...
+2025-06-13 14:26:50,706 - __main__ - INFO - ✅ Flask components imported
+2025-06-13 14:26:50,706 - __main__ - INFO - Importing project components...
+2025-06-13 14:26:50,984 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:26:50,985 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-13 14:26:51,447 - __main__ - INFO - ✅ Project components imported
+2025-06-13 14:26:51,447 - __main__ - INFO - Initializing Flask application...
+2025-06-13 14:26:51,476 - __main__ - INFO - ✅ Flask application initialized
+2025-06-13 14:26:51,476 - __main__ - INFO - Initializing database connection...
+2025-06-13 14:26:51,476 - __main__ - INFO - ✅ Database connection initialized
+2025-06-13 14:26:51,476 - __main__ - INFO - Testing database connection...
+2025-06-13 14:26:51,478 - __main__ - INFO - ✅ Database connection test successful
+2025-06-13 14:26:51,478 - __main__ - INFO - Initializing Claude query service...
+2025-06-13 14:26:51,553 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-13 14:26:51,553 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-13 14:26:51,555 - __main__ - INFO - Starting task manager and background services...
+2025-06-13 14:26:51,555 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-13 14:26:51,555 - __main__ - INFO - ✅ Task manager started
+2025-06-13 14:26:51,555 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-13 14:26:51,555 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,555 - __main__ - INFO - STARTING WEB SERVER
+2025-06-13 14:26:51,555 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,555 - __main__ - INFO - Creating templates directory...
+2025-06-13 14:26:51,556 - __main__ - INFO - ✅ Templates directory ready
+2025-06-13 14:26:51,556 - __main__ - INFO - Server configuration:
+2025-06-13 14:26:51,556 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-13 14:26:51,556 - __main__ - INFO -   - Port: 5001
+2025-06-13 14:26:51,556 - __main__ - INFO -   - Debug: True
+2025-06-13 14:26:51,556 - __main__ - INFO -   - CORS: Enabled
+2025-06-13 14:26:51,556 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,556 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-13 14:26:51,556 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-13 14:26:51,556 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-13 14:26:51,556 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,556 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+ * Serving Flask app 'web_dashboard'
+ * Debug mode: on
+2025-06-13 14:26:51,606 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.164:5001
+2025-06-13 14:26:51,607 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 14:26:51,607 - werkzeug - INFO -  * Restarting with stat
+2025-06-13 14:26:51,640 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,640 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-13 14:26:51,640 - __main__ - INFO - ============================================================
+2025-06-13 14:26:51,640 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-13 14:26:51,640 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-13 14:26:51,640 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-13 14:26:51,640 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-13 14:26:51,649 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-13 14:26:51,650 - __main__ - INFO - Environment variables:
+2025-06-13 14:26:51,650 - __main__ - INFO -   - DB_PATH: default
+2025-06-13 14:26:51,650 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-13 14:26:51,650 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-13 14:26:51,650 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-13 14:26:51,650 - __main__ - INFO - Importing Flask components...
+2025-06-13 14:26:51,861 - __main__ - INFO - ✅ Flask components imported
+2025-06-13 14:26:51,861 - __main__ - INFO - Importing project components...
+2025-06-13 14:26:51,996 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:26:51,997 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-13 14:26:52,211 - __main__ - INFO - ✅ Project components imported
+2025-06-13 14:26:52,211 - __main__ - INFO - Initializing Flask application...
+2025-06-13 14:26:52,229 - __main__ - INFO - ✅ Flask application initialized
+2025-06-13 14:26:52,229 - __main__ - INFO - Initializing database connection...
+2025-06-13 14:26:52,229 - __main__ - INFO - ✅ Database connection initialized
+2025-06-13 14:26:52,229 - __main__ - INFO - Testing database connection...
+2025-06-13 14:26:52,229 - __main__ - INFO - ✅ Database connection test successful
+2025-06-13 14:26:52,229 - __main__ - INFO - Initializing Claude query service...
+2025-06-13 14:26:52,271 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-13 14:26:52,271 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-13 14:26:52,273 - __main__ - INFO - Starting task manager and background services...
+2025-06-13 14:26:52,274 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-13 14:26:52,274 - __main__ - INFO - ✅ Task manager started
+2025-06-13 14:26:52,274 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-13 14:26:52,274 - __main__ - INFO - ============================================================
+2025-06-13 14:26:52,274 - __main__ - INFO - STARTING WEB SERVER
+2025-06-13 14:26:52,274 - __main__ - INFO - ============================================================
+2025-06-13 14:26:52,274 - __main__ - INFO - Creating templates directory...
+2025-06-13 14:26:52,274 - __main__ - INFO - ✅ Templates directory ready
+2025-06-13 14:26:52,274 - __main__ - INFO - Server configuration:
+2025-06-13 14:26:52,274 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-13 14:26:52,274 - __main__ - INFO -   - Port: 5001
+2025-06-13 14:26:52,274 - __main__ - INFO -   - Debug: True
+2025-06-13 14:26:52,274 - __main__ - INFO -   - CORS: Enabled
+2025-06-13 14:26:52,274 - __main__ - INFO - ============================================================
+2025-06-13 14:26:52,274 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-13 14:26:52,274 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-13 14:26:52,274 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-13 14:26:52,274 - __main__ - INFO - ============================================================
+2025-06-13 14:26:52,274 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-13 14:26:52,289 - werkzeug - WARNING -  * Debugger is active!
+2025-06-13 14:26:52,309 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-13 14:26:58,476 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:26:58] "HEAD /api/stats/characters HTTP/1.1" 200 -
+2025-06-13 14:27:03,318 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET / HTTP/1.1" 200 -
+2025-06-13 14:27:03,596 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /socket.io/?EIO=4&transport=polling&t=PTdYf0a HTTP/1.1" 200 -
+2025-06-13 14:27:03,603 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:27:03,603 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:27:03,610 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:27:03,611 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:27:03,616 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-13 14:27:03,617 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/hourly HTTP/1.1" 200 -
+2025-06-13 14:27:03,642 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/latest-pulls HTTP/1.1" 200 -
+2025-06-13 14:27:03,643 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/discord HTTP/1.1" 200 -
+2025-06-13 14:27:03,650 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/query/examples HTTP/1.1" 200 -
+Client connected
+2025-06-13 14:27:03,657 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "POST /socket.io/?EIO=4&transport=polling&t=PTdYf1B&sid=58rcVGkjhlNgFMkrAAAA HTTP/1.1" 200 -
+2025-06-13 14:27:03,660 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/characters HTTP/1.1" 200 -
+2025-06-13 14:27:03,663 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/requests HTTP/1.1" 200 -
+2025-06-13 14:27:03,663 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /api/stats/errors HTTP/1.1" 200 -
+2025-06-13 14:27:03,665 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "GET /socket.io/?EIO=4&transport=polling&t=PTdYf1D&sid=58rcVGkjhlNgFMkrAAAA HTTP/1.1" 200 -
+2025-06-13 14:27:03,666 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:03] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-13 14:27:03,672 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:03,673 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:03,674 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:03,674 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:03,674 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:03,674 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:03,674 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:17,645 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:17] "GET /api/stats/characters HTTP/1.1" 200 -
+2025-06-13 14:27:23,042 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:23,362 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:23,363 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:23,363 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:23,364 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:23] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:23,366 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:23,366 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:23,366 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:23,366 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:23,367 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:23,368 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:24,304 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:24,305 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:26,309 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:26,310 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:28,311 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:30,313 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:30,314 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:32,317 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:32,318 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:32,318 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:32,318 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:32,318 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:32,318 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:34,416 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:35,256 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:35,259 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:35,259 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:35,260 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:35,271 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/requests HTTP/1.1" 200 -
+2025-06-13 14:27:35,274 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/hourly HTTP/1.1" 200 -
+2025-06-13 14:27:35,287 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/characters HTTP/1.1" 200 -
+2025-06-13 14:27:35,291 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/latest-pulls HTTP/1.1" 200 -
+2025-06-13 14:27:35,295 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/errors HTTP/1.1" 200 -
+2025-06-13 14:27:35,298 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:35] "GET /api/stats/discord HTTP/1.1" 200 -
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:35,300 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:35,301 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:36,126 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:36,412 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:36,413 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:36,413 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:36,414 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:36] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:36,416 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:36,417 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:36,417 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:36,417 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:36,660 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:36,924 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:36,925 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:36,925 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:36,926 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:36] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:38,105 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:38,321 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:38,322 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:38,322 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:38,322 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:38,322 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:38,322 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 45.0 seconds
+2025-06-13 14:27:38,375 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:38,376 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:38,376 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:38,376 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:38] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:39,101 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:39,372 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:39,372 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:39,372 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:39,373 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:40,158 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:40,327 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:40,328 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:40,329 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:40,329 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 43.0 seconds
+2025-06-13 14:27:40,423 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:40,423 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:40,423 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:40,424 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:40] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:42,333 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:42,334 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:42,335 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:42,335 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 41.0 seconds
+2025-06-13 14:27:44,335 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:44,335 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:44,335 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:44,336 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:44,337 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:44,338 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 39.0 seconds
+2025-06-13 14:27:45,437 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:45,696 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:45,697 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:45,697 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:45,698 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:45] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:46,338 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:46,338 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:46,338 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:46,339 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:46,340 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:46,340 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 37.0 seconds
+2025-06-13 14:27:52,888 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:27:53,158 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:27:53,160 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:27:53,160 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:27:53,161 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:27:53] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:27:53,164 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:53,164 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:27:53,165 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:27:53,166 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:27:53,166 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:27:53,166 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:27:53,166 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 30.2 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:24,365 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 10.9 seconds
+2025-06-13 14:28:36,256 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:36,256 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:36,256 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:36,258 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:36,258 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:36,258 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.2 seconds
+2025-06-13 14:28:37,409 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:37,409 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:37,409 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:37,410 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:37,411 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:37,411 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 1.0 seconds
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,380 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:28:39,659 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:28:39,659 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:28:39,660 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:28:39,660 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:28:39,660 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:39,660 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:39,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:39,662 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:39,666 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,667 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,668 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:28:39,668 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,668 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:28:39,669 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,669 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:28:39,669 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,670 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,670 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:28:39,670 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:39,670 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,670 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,670 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:39,670 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,671 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:39,671 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,672 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:39,672 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,673 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,674 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,675 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,677 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,676 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,677 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,677 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,677 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,678 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,679 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,680 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.7 seconds
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,680 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,681 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,682 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,682 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.7 seconds
+2025-06-13 14:28:39,682 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.7 seconds
+2025-06-13 14:28:39,682 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,682 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,682 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,683 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.7 seconds
+2025-06-13 14:28:39,697 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:28:39,697 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:28:39,697 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:39,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:39] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:39,700 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,700 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,700 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,701 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:39,702 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:39,703 - src.scraper.rate_limit_manager - INFO - ladder API minute limit reached. Waiting 0.7 seconds
+2025-06-13 14:28:40,238 - src.scraper.rate_limit_manager - WARNING - ladder API request failed. Failure count: 1
+2025-06-13 14:28:40,241 - src.scraper.poe_ladder_client - ERROR - Request failed with status 429: {"error":{"code":3,"message":"Rate limit exceeded"}}
+2025-06-13 14:28:40,241 - src.scraper.ladder_scraper - ERROR - No leagues data available, no leagues will be monitored
+2025-06-13 14:28:40,241 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:28:40,242 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:28:40] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:40,243 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:28:40,244 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:28:40,244 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3523.1 seconds
+2025-06-13 14:28:41,422 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3521.9 seconds
+2025-06-13 14:28:41,424 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3521.9 seconds
+2025-06-13 14:28:41,425 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3521.9 seconds
+2025-06-13 14:28:41,426 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3521.9 seconds
+2025-06-13 14:28:41,426 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3521.9 seconds
+2025-06-13 14:29:40,249 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3463.1 seconds
+2025-06-13 14:29:41,427 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3461.9 seconds
+2025-06-13 14:29:41,427 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3461.9 seconds
+2025-06-13 14:29:41,427 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3461.9 seconds
+2025-06-13 14:29:41,429 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3461.9 seconds
+2025-06-13 14:29:41,429 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3461.9 seconds
+2025-06-13 14:30:40,253 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3403.1 seconds
+2025-06-13 14:30:41,431 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3401.9 seconds
+2025-06-13 14:30:41,431 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3401.9 seconds
+2025-06-13 14:30:41,431 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3401.9 seconds
+2025-06-13 14:30:41,432 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3401.9 seconds
+2025-06-13 14:30:41,433 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3401.9 seconds
+2025-06-13 14:31:40,259 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3343.1 seconds
+2025-06-13 14:31:41,434 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3341.9 seconds
+2025-06-13 14:31:41,435 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3341.9 seconds
+2025-06-13 14:31:41,436 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3341.9 seconds
+2025-06-13 14:31:41,436 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3341.9 seconds
+2025-06-13 14:31:41,436 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3341.9 seconds
+2025-06-13 14:32:40,264 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3283.1 seconds
+2025-06-13 14:32:41,435 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3281.9 seconds
+2025-06-13 14:32:41,436 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3281.9 seconds
+2025-06-13 14:32:41,437 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3281.9 seconds
+2025-06-13 14:32:41,438 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3281.9 seconds
+2025-06-13 14:32:41,441 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3281.9 seconds
+2025-06-13 14:33:40,270 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3223.1 seconds
+2025-06-13 14:33:41,437 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3221.9 seconds
+2025-06-13 14:33:41,437 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3221.9 seconds
+2025-06-13 14:33:41,440 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3221.9 seconds
+2025-06-13 14:33:41,441 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3221.9 seconds
+2025-06-13 14:33:41,441 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3221.9 seconds
+2025-06-13 14:34:40,272 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3163.1 seconds
+2025-06-13 14:34:41,438 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3161.9 seconds
+2025-06-13 14:34:41,438 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3161.9 seconds
+2025-06-13 14:34:41,440 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3161.9 seconds
+2025-06-13 14:34:41,441 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3161.9 seconds
+2025-06-13 14:34:41,441 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3161.9 seconds
+2025-06-13 14:35:40,279 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3103.1 seconds
+2025-06-13 14:35:41,442 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3101.9 seconds
+2025-06-13 14:35:41,445 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3101.9 seconds
+2025-06-13 14:35:41,445 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3101.9 seconds
+2025-06-13 14:35:41,447 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3101.9 seconds
+2025-06-13 14:35:41,448 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3101.9 seconds
+2025-06-13 14:36:40,285 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3043.1 seconds
+2025-06-13 14:36:41,447 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3041.9 seconds
+2025-06-13 14:36:41,450 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3041.9 seconds
+2025-06-13 14:36:41,450 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3041.9 seconds
+2025-06-13 14:36:41,450 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3041.9 seconds
+2025-06-13 14:36:41,453 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 3041.9 seconds
+2025-06-13 14:37:40,290 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2983.1 seconds
+2025-06-13 14:37:41,448 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:37:41,448 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:37:41,453 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:37:41,453 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:37:41,453 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:37:41,453 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:37:41,453 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:37:41,454 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:37:41,458 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:37:41,458 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:37:41,820 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:37:41,822 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:37:41,822 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:37:41,824 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:37:41,825 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:37:41,825 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:37:41,825 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:37:41,827 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:37:41,828 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:37:41,829 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:37:41,830 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:37:41,832 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:37:41,838 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,838 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,839 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,839 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:37:41,839 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,840 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,841 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:37:41,841 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:37:41,842 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:37:41,842 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,843 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/hourly HTTP/1.1" 200 -
+2025-06-13 14:37:41,843 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,848 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,849 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,849 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,850 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,850 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,850 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,850 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,852 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,853 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,853 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,853 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,853 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2981.5 seconds
+2025-06-13 14:37:41,861 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/latest-pulls HTTP/1.1" 200 -
+2025-06-13 14:37:41,874 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/requests HTTP/1.1" 200 -
+2025-06-13 14:37:41,875 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/characters HTTP/1.1" 200 -
+2025-06-13 14:37:41,881 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/errors HTTP/1.1" 200 -
+2025-06-13 14:37:41,883 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,884 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:41] "GET /api/stats/discord HTTP/1.1" 200 -
+2025-06-13 14:37:41,884 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,885 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,886 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,886 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,886 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,886 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,886 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,887 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,887 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,887 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,888 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,888 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,888 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,888 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,889 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,890 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,890 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,891 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,894 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,895 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,896 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,897 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,897 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,897 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2981.5 seconds
+2025-06-13 14:37:41,897 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,897 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,897 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2981.5 seconds
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:41,898 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2981.5 seconds
+2025-06-13 14:37:42,383 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:37:42,384 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:37:42,384 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:37:42,385 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:37:42] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:42,387 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:37:42,388 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:37:42,388 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2981.0 seconds
+2025-06-13 14:38:40,292 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:38:40,293 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:38:40,572 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:38:40,573 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:38:40,573 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:38:40,573 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:38:40] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:38:40,575 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:38:40,575 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:38:40,575 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/builds
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/items
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/currency
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/raw
+2025-06-13 14:38:40,576 - src.storage.data_manager - INFO - Ensured directory exists: data/analysis
+2025-06-13 14:38:40,576 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2922.8 seconds
+2025-06-13 14:38:41,854 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2921.5 seconds
+2025-06-13 14:38:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2921.5 seconds
+2025-06-13 14:38:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2921.5 seconds
+2025-06-13 14:38:41,900 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2921.5 seconds
+2025-06-13 14:38:42,393 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2921.0 seconds
+2025-06-13 14:39:40,582 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2862.8 seconds
+2025-06-13 14:39:41,857 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2861.5 seconds
+2025-06-13 14:39:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2861.5 seconds
+2025-06-13 14:39:41,900 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2861.5 seconds
+2025-06-13 14:39:41,901 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2861.5 seconds
+2025-06-13 14:39:42,398 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2861.0 seconds
+2025-06-13 14:40:40,586 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2802.8 seconds
+2025-06-13 14:40:41,859 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2801.5 seconds
+2025-06-13 14:40:41,898 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2801.5 seconds
+2025-06-13 14:40:41,901 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2801.5 seconds
+2025-06-13 14:40:41,904 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2801.5 seconds
+2025-06-13 14:40:42,403 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2801.0 seconds
+2025-06-13 14:41:40,589 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2742.8 seconds
+2025-06-13 14:41:41,859 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2741.5 seconds
+2025-06-13 14:41:41,902 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2741.5 seconds
+2025-06-13 14:41:41,903 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2741.5 seconds
+2025-06-13 14:41:41,904 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2741.5 seconds
+2025-06-13 14:41:42,403 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2741.0 seconds
+2025-06-13 14:42:40,594 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2682.8 seconds
+2025-06-13 14:42:41,864 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2681.5 seconds
+2025-06-13 14:42:41,905 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2681.5 seconds
+2025-06-13 14:42:41,905 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2681.5 seconds
+2025-06-13 14:42:41,907 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2681.5 seconds
+2025-06-13 14:42:42,408 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2681.0 seconds
+2025-06-13 14:43:40,600 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2622.8 seconds
+2025-06-13 14:43:41,870 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2621.5 seconds
+2025-06-13 14:43:41,907 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2621.5 seconds
+2025-06-13 14:43:41,910 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2621.4 seconds
+2025-06-13 14:43:41,910 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2621.4 seconds
+2025-06-13 14:43:42,409 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2621.0 seconds
+2025-06-13 14:44:40,603 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2562.8 seconds
+2025-06-13 14:44:41,874 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2561.5 seconds
+2025-06-13 14:44:41,912 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2561.4 seconds
+2025-06-13 14:44:41,913 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2561.4 seconds
+2025-06-13 14:44:41,915 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2561.4 seconds
+2025-06-13 14:44:42,411 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2560.9 seconds
+2025-06-13 14:45:40,609 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2502.8 seconds
+2025-06-13 14:45:41,876 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2501.5 seconds
+2025-06-13 14:45:41,916 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2501.4 seconds
+2025-06-13 14:45:41,916 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2501.4 seconds
+2025-06-13 14:45:41,916 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2501.4 seconds
+2025-06-13 14:45:42,416 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2500.9 seconds
+Client disconnected
+2025-06-13 14:46:30,130 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:46:30] "GET /socket.io/?EIO=4&transport=websocket&sid=58rcVGkjhlNgFMkrAAAA HTTP/1.1" 200 -
+2025-06-13 14:46:40,609 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2442.8 seconds
+2025-06-13 14:46:41,881 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2441.5 seconds
+2025-06-13 14:46:41,921 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2441.4 seconds
+2025-06-13 14:46:41,922 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2441.4 seconds
+2025-06-13 14:46:41,922 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2441.4 seconds
+2025-06-13 14:46:42,417 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2440.9 seconds
+2025-06-13 14:47:40,617 - src.scraper.rate_limit_manager - INFO - ladder API hourly limit reached. Waiting 2382.7 seconds
+2025-06-13 14:47:41,885 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:47:41,885 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:47:41,926 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:47:41,926 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:47:41,926 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:47:41,926 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:47:41,926 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:47:41,927 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:47:42,227 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:47:42,228 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:47:42,228 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:47:42,230 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:47:42] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:47:42,246 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:47:42,246 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:47:42,246 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:47:42,247 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:47:42] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:47:42,249 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:47:42,249 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:47:42,250 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:47:42,251 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:47:42] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:47:42,251 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:47:42,252 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:47:42,252 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:47:42,253 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:47:42] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:47:42,422 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:47:42,422 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:47:43,299 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:47:43,300 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:47:43,300 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:47:43,301 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:47:43] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-13 14:48:40,619 - src.scraper.rate_limit_manager - ERROR - ladder API rate limiting exceeded max wait cycles, proceeding anyway
+2025-06-13 14:48:40,620 - src.scraper.poe_ladder_client - INFO - Making request to https://www.pathofexile.com/api/leagues with params None
+2025-06-13 14:48:41,463 - src.scraper.ladder_scraper - WARNING - Could not find base challenge league from API - checking database for existing leagues
+2025-06-13 14:48:41,464 - src.scraper.ladder_scraper - INFO - Using recent challenge leagues from database: ['Settlers']
+2025-06-13 14:48:41,464 - src.scraper.ladder_scraper - INFO - LadderScraper initialized
+2025-06-13 14:48:41,465 - werkzeug - INFO - 127.0.0.1 - - [13/Jun/2025 14:48:41] "GET /api/scraping/status HTTP/1.1" 200 -
+2025-06-14 05:08:08,020 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/test_build_categorization_e2e.py', reloading
+2025-06-14 05:08:08,208 - werkzeug - INFO -  * Restarting with stat
+2025-06-14 05:08:08,266 - __main__ - INFO - ============================================================
+2025-06-14 05:08:08,266 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-14 05:08:08,266 - __main__ - INFO - ============================================================
+2025-06-14 05:08:08,266 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-14 05:08:08,266 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-14 05:08:08,266 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-14 05:08:08,266 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-14 05:08:08,276 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-14 05:08:08,276 - __main__ - INFO - Environment variables:
+2025-06-14 05:08:08,276 - __main__ - INFO -   - DB_PATH: default
+2025-06-14 05:08:08,276 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-14 05:08:08,276 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-14 05:08:08,276 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-14 05:08:08,276 - __main__ - INFO - Importing Flask components...
+2025-06-14 05:08:08,559 - __main__ - INFO - ✅ Flask components imported
+2025-06-14 05:08:08,559 - __main__ - INFO - Importing project components...
+2025-06-14 05:08:08,713 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-14 05:08:08,713 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-14 05:08:09,023 - __main__ - INFO - ✅ Project components imported
+2025-06-14 05:08:09,023 - __main__ - INFO - Initializing Flask application...
+2025-06-14 05:08:09,052 - __main__ - INFO - ✅ Flask application initialized
+2025-06-14 05:08:09,053 - __main__ - INFO - Initializing database connection...
+2025-06-14 05:08:09,053 - __main__ - INFO - ✅ Database connection initialized
+2025-06-14 05:08:09,053 - __main__ - INFO - Testing database connection...
+2025-06-14 05:08:09,053 - __main__ - INFO - ✅ Database connection test successful
+2025-06-14 05:08:09,053 - __main__ - INFO - Initializing Claude query service...
+2025-06-14 05:08:09,112 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-14 05:08:09,112 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-14 05:08:09,114 - __main__ - INFO - Starting task manager and background services...
+2025-06-14 05:08:09,115 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-14 05:08:09,115 - __main__ - INFO - ✅ Task manager started
+2025-06-14 05:08:09,115 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-14 05:08:09,115 - __main__ - INFO - ============================================================
+2025-06-14 05:08:09,115 - __main__ - INFO - STARTING WEB SERVER
+2025-06-14 05:08:09,115 - __main__ - INFO - ============================================================
+2025-06-14 05:08:09,115 - __main__ - INFO - Creating templates directory...
+2025-06-14 05:08:09,115 - __main__ - INFO - ✅ Templates directory ready
+2025-06-14 05:08:09,115 - __main__ - INFO - Server configuration:
+2025-06-14 05:08:09,115 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-14 05:08:09,115 - __main__ - INFO -   - Port: 5001
+2025-06-14 05:08:09,115 - __main__ - INFO -   - Debug: True
+2025-06-14 05:08:09,115 - __main__ - INFO -   - CORS: Enabled
+2025-06-14 05:08:09,115 - __main__ - INFO - ============================================================
+2025-06-14 05:08:09,115 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-14 05:08:09,115 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-14 05:08:09,115 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-14 05:08:09,115 - __main__ - INFO - ============================================================
+2025-06-14 05:08:09,115 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-14 05:08:09,129 - werkzeug - WARNING -  * Debugger is active!
+2025-06-14 05:08:09,139 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-14 05:08:54,437 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/test_query_system.py', reloading
+2025-06-14 05:08:54,533 - werkzeug - INFO -  * Restarting with stat
+2025-06-14 05:08:54,613 - __main__ - INFO - ============================================================
+2025-06-14 05:08:54,613 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-14 05:08:54,613 - __main__ - INFO - ============================================================
+2025-06-14 05:08:54,613 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-14 05:08:54,613 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-14 05:08:54,613 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-14 05:08:54,613 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-14 05:08:54,622 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-14 05:08:54,622 - __main__ - INFO - Environment variables:
+2025-06-14 05:08:54,622 - __main__ - INFO -   - DB_PATH: default
+2025-06-14 05:08:54,622 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-14 05:08:54,622 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-14 05:08:54,622 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-14 05:08:54,622 - __main__ - INFO - Importing Flask components...
+2025-06-14 05:08:54,881 - __main__ - INFO - ✅ Flask components imported
+2025-06-14 05:08:54,881 - __main__ - INFO - Importing project components...
+2025-06-14 05:08:55,040 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-14 05:08:55,041 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-14 05:08:55,323 - __main__ - INFO - ✅ Project components imported
+2025-06-14 05:08:55,323 - __main__ - INFO - Initializing Flask application...
+2025-06-14 05:08:55,340 - __main__ - INFO - ✅ Flask application initialized
+2025-06-14 05:08:55,340 - __main__ - INFO - Initializing database connection...
+2025-06-14 05:08:55,340 - __main__ - INFO - ✅ Database connection initialized
+2025-06-14 05:08:55,340 - __main__ - INFO - Testing database connection...
+2025-06-14 05:08:55,340 - __main__ - INFO - ✅ Database connection test successful
+2025-06-14 05:08:55,340 - __main__ - INFO - Initializing Claude query service...
+2025-06-14 05:08:55,387 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-14 05:08:55,387 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-14 05:08:55,389 - __main__ - INFO - Starting task manager and background services...
+2025-06-14 05:08:55,390 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-14 05:08:55,390 - __main__ - INFO - ✅ Task manager started
+2025-06-14 05:08:55,390 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-14 05:08:55,390 - __main__ - INFO - ============================================================
+2025-06-14 05:08:55,390 - __main__ - INFO - STARTING WEB SERVER
+2025-06-14 05:08:55,390 - __main__ - INFO - ============================================================
+2025-06-14 05:08:55,390 - __main__ - INFO - Creating templates directory...
+2025-06-14 05:08:55,390 - __main__ - INFO - ✅ Templates directory ready
+2025-06-14 05:08:55,390 - __main__ - INFO - Server configuration:
+2025-06-14 05:08:55,390 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-14 05:08:55,390 - __main__ - INFO -   - Port: 5001
+2025-06-14 05:08:55,390 - __main__ - INFO -   - Debug: True
+2025-06-14 05:08:55,390 - __main__ - INFO -   - CORS: Enabled
+2025-06-14 05:08:55,390 - __main__ - INFO - ============================================================
+2025-06-14 05:08:55,390 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-14 05:08:55,390 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-14 05:08:55,390 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-14 05:08:55,390 - __main__ - INFO - ============================================================
+2025-06-14 05:08:55,391 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-14 05:08:55,411 - werkzeug - WARNING -  * Debugger is active!
+2025-06-14 05:08:55,420 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-14 05:09:16,910 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/test_query_system.py', reloading
+2025-06-14 05:09:17,038 - werkzeug - INFO -  * Restarting with stat
+2025-06-14 05:09:17,071 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,071 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-14 05:09:17,071 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,071 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-14 05:09:17,071 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-14 05:09:17,071 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-14 05:09:17,071 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-14 05:09:17,079 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-14 05:09:17,079 - __main__ - INFO - Environment variables:
+2025-06-14 05:09:17,079 - __main__ - INFO -   - DB_PATH: default
+2025-06-14 05:09:17,079 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-14 05:09:17,079 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-14 05:09:17,079 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-14 05:09:17,079 - __main__ - INFO - Importing Flask components...
+2025-06-14 05:09:17,388 - __main__ - INFO - ✅ Flask components imported
+2025-06-14 05:09:17,388 - __main__ - INFO - Importing project components...
+2025-06-14 05:09:17,558 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-14 05:09:17,559 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-14 05:09:17,872 - __main__ - INFO - ✅ Project components imported
+2025-06-14 05:09:17,872 - __main__ - INFO - Initializing Flask application...
+2025-06-14 05:09:17,889 - __main__ - INFO - ✅ Flask application initialized
+2025-06-14 05:09:17,889 - __main__ - INFO - Initializing database connection...
+2025-06-14 05:09:17,889 - __main__ - INFO - ✅ Database connection initialized
+2025-06-14 05:09:17,889 - __main__ - INFO - Testing database connection...
+2025-06-14 05:09:17,890 - __main__ - INFO - ✅ Database connection test successful
+2025-06-14 05:09:17,890 - __main__ - INFO - Initializing Claude query service...
+2025-06-14 05:09:17,959 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-14 05:09:17,960 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-14 05:09:17,962 - __main__ - INFO - Starting task manager and background services...
+2025-06-14 05:09:17,962 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-14 05:09:17,962 - __main__ - INFO - ✅ Task manager started
+2025-06-14 05:09:17,962 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-14 05:09:17,962 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,962 - __main__ - INFO - STARTING WEB SERVER
+2025-06-14 05:09:17,962 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,962 - __main__ - INFO - Creating templates directory...
+2025-06-14 05:09:17,962 - __main__ - INFO - ✅ Templates directory ready
+2025-06-14 05:09:17,962 - __main__ - INFO - Server configuration:
+2025-06-14 05:09:17,962 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-14 05:09:17,962 - __main__ - INFO -   - Port: 5001
+2025-06-14 05:09:17,962 - __main__ - INFO -   - Debug: True
+2025-06-14 05:09:17,962 - __main__ - INFO -   - CORS: Enabled
+2025-06-14 05:09:17,962 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,962 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-14 05:09:17,962 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-14 05:09:17,962 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-14 05:09:17,962 - __main__ - INFO - ============================================================
+2025-06-14 05:09:17,963 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-14 05:09:17,977 - werkzeug - WARNING -  * Debugger is active!
+2025-06-14 05:09:17,983 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-14 05:33:24,666 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/conftest.py', reloading
+2025-06-14 05:33:24,818 - werkzeug - INFO -  * Restarting with stat
+2025-06-14 05:33:24,854 - __main__ - INFO - ============================================================
+2025-06-14 05:33:24,854 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-14 05:33:24,854 - __main__ - INFO - ============================================================
+2025-06-14 05:33:24,854 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-14 05:33:24,854 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-14 05:33:24,854 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-14 05:33:24,854 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-14 05:33:24,871 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-14 05:33:24,871 - __main__ - INFO - Environment variables:
+2025-06-14 05:33:24,872 - __main__ - INFO -   - DB_PATH: default
+2025-06-14 05:33:24,872 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-14 05:33:24,872 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-14 05:33:24,872 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-14 05:33:24,872 - __main__ - INFO - Importing Flask components...
+2025-06-14 05:33:25,128 - __main__ - INFO - ✅ Flask components imported
+2025-06-14 05:33:25,129 - __main__ - INFO - Importing project components...
+2025-06-14 05:33:25,282 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-14 05:33:25,283 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-14 05:33:25,554 - __main__ - INFO - ✅ Project components imported
+2025-06-14 05:33:25,554 - __main__ - INFO - Initializing Flask application...
+2025-06-14 05:33:25,571 - __main__ - INFO - ✅ Flask application initialized
+2025-06-14 05:33:25,571 - __main__ - INFO - Initializing database connection...
+2025-06-14 05:33:25,571 - __main__ - INFO - ✅ Database connection initialized
+2025-06-14 05:33:25,571 - __main__ - INFO - Testing database connection...
+2025-06-14 05:33:25,571 - __main__ - INFO - ✅ Database connection test successful
+2025-06-14 05:33:25,571 - __main__ - INFO - Initializing Claude query service...
+2025-06-14 05:33:25,633 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-14 05:33:25,633 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-14 05:33:25,635 - __main__ - INFO - Starting task manager and background services...
+2025-06-14 05:33:25,635 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-14 05:33:25,635 - __main__ - INFO - ✅ Task manager started
+2025-06-14 05:33:25,635 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-14 05:33:25,635 - __main__ - INFO - ============================================================
+2025-06-14 05:33:25,635 - __main__ - INFO - STARTING WEB SERVER
+2025-06-14 05:33:25,635 - __main__ - INFO - ============================================================
+2025-06-14 05:33:25,635 - __main__ - INFO - Creating templates directory...
+2025-06-14 05:33:25,635 - __main__ - INFO - ✅ Templates directory ready
+2025-06-14 05:33:25,635 - __main__ - INFO - Server configuration:
+2025-06-14 05:33:25,635 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-14 05:33:25,635 - __main__ - INFO -   - Port: 5001
+2025-06-14 05:33:25,635 - __main__ - INFO -   - Debug: True
+2025-06-14 05:33:25,635 - __main__ - INFO -   - CORS: Enabled
+2025-06-14 05:33:25,635 - __main__ - INFO - ============================================================
+2025-06-14 05:33:25,635 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-14 05:33:25,635 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-14 05:33:25,635 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-14 05:33:25,635 - __main__ - INFO - ============================================================
+2025-06-14 05:33:25,635 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-14 05:33:25,652 - werkzeug - WARNING -  * Debugger is active!
+2025-06-14 05:33:25,659 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-15 07:44:01,278 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/test_query_system.py', reloading
+2025-06-15 07:44:01,427 - werkzeug - INFO -  * Restarting with stat
+2025-06-15 07:44:01,468 - __main__ - INFO - ============================================================
+2025-06-15 07:44:01,468 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-15 07:44:01,468 - __main__ - INFO - ============================================================
+2025-06-15 07:44:01,468 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-15 07:44:01,468 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-15 07:44:01,468 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-15 07:44:01,468 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-15 07:44:01,482 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-15 07:44:01,483 - __main__ - INFO - Environment variables:
+2025-06-15 07:44:01,483 - __main__ - INFO -   - DB_PATH: default
+2025-06-15 07:44:01,483 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-15 07:44:01,483 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-15 07:44:01,483 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-15 07:44:01,483 - __main__ - INFO - Importing Flask components...
+2025-06-15 07:44:01,772 - __main__ - INFO - ✅ Flask components imported
+2025-06-15 07:44:01,773 - __main__ - INFO - Importing project components...
+2025-06-15 07:44:01,959 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-15 07:44:01,960 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-15 07:44:02,247 - __main__ - INFO - ✅ Project components imported
+2025-06-15 07:44:02,247 - __main__ - INFO - Initializing Flask application...
+2025-06-15 07:44:02,267 - __main__ - INFO - ✅ Flask application initialized
+2025-06-15 07:44:02,267 - __main__ - INFO - Initializing database connection...
+2025-06-15 07:44:02,267 - __main__ - INFO - ✅ Database connection initialized
+2025-06-15 07:44:02,267 - __main__ - INFO - Testing database connection...
+2025-06-15 07:44:02,268 - __main__ - INFO - ✅ Database connection test successful
+2025-06-15 07:44:02,268 - __main__ - INFO - Initializing Claude query service...
+2025-06-15 07:44:02,314 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-15 07:44:02,314 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-15 07:44:02,316 - __main__ - INFO - Starting task manager and background services...
+2025-06-15 07:44:02,317 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-15 07:44:02,317 - __main__ - INFO - ✅ Task manager started
+2025-06-15 07:44:02,317 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-15 07:44:02,317 - __main__ - INFO - ============================================================
+2025-06-15 07:44:02,317 - __main__ - INFO - STARTING WEB SERVER
+2025-06-15 07:44:02,317 - __main__ - INFO - ============================================================
+2025-06-15 07:44:02,317 - __main__ - INFO - Creating templates directory...
+2025-06-15 07:44:02,317 - __main__ - INFO - ✅ Templates directory ready
+2025-06-15 07:44:02,317 - __main__ - INFO - Server configuration:
+2025-06-15 07:44:02,317 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-15 07:44:02,317 - __main__ - INFO -   - Port: 5001
+2025-06-15 07:44:02,317 - __main__ - INFO -   - Debug: True
+2025-06-15 07:44:02,317 - __main__ - INFO -   - CORS: Enabled
+2025-06-15 07:44:02,317 - __main__ - INFO - ============================================================
+2025-06-15 07:44:02,317 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-15 07:44:02,317 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-15 07:44:02,317 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-15 07:44:02,317 - __main__ - INFO - ============================================================
+2025-06-15 07:44:02,317 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-15 07:44:02,345 - werkzeug - WARNING -  * Debugger is active!
+2025-06-15 07:44:02,354 - werkzeug - INFO -  * Debugger PIN: 135-038-572

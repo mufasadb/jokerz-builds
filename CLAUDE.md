@@ -91,6 +91,30 @@ python discord_bot.py
 - Verify the database contains character data before using commands
 - For `/ask` command, ensure ANTHROPIC_API_KEY is configured
 
+## Cloudflare Access for Remote Debugging
+
+The application is hosted at https://jokers-builds.beachysapp.com/ behind Cloudflare Access authentication.
+
+### Service Token Configuration
+For automated access (e.g., Claude debugging), service tokens are configured in `.env`:
+```
+CF_ACCESS_CLIENT_ID=8566de2f6aa3e27f29862d6ac7cda19e.access
+CF_ACCESS_CLIENT_SECRET=4da273b33d39db31ba1ca3764c1dcbefeea7209b0a3888df5746fea0390f1e84
+```
+
+### Using Service Token
+When accessing the site programmatically, include headers:
+```bash
+curl -H "CF-Access-Client-Id: 8566de2f6aa3e27f29862d6ac7cda19e.access" \
+     -H "CF-Access-Client-Secret: 4da273b33d39db31ba1ca3764c1dcbefeea7209b0a3888df5746fea0390f1e84" \
+     https://jokers-builds.beachysapp.com/
+```
+
+### Cloudflare Configuration
+- Service token "claude" created in Zero Trust dashboard
+- Policy order: Service tokens evaluated first, then email auth
+- Both policies set to "Allow" action
+
 ## Git Workflow
 
 ALWAYS commit changes after completing and testing each task.
