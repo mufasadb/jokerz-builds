@@ -233,15 +233,21 @@ class TaskState(Base):
 
 class DatabaseManager:
     """Manages database connections and operations"""
-    _instance = None
+    _instances = {}  # Changed from single instance to instance per database URL
     _lock = threading.Lock()
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            with cls._lock:
-                if not cls._instance:
-                    cls._instance = super().__new__(cls)
-        return cls._instance
+    def __new__(cls, database_url: Optional[str] = None):
+        # Normalize the database URL for consistent instance lookup
+        if database_url is None:
+            default_path = os.path.join(os.getcwd(), 'data', 'ladder_snapshots.db')
+            db_path = os.getenv('DB_PATH', default_path)
+            database_url = f"sqlite:///{db_path}"
+        
+        # Use the database URL as the key for instance lookup
+        with cls._lock:
+            if database_url not in cls._instances:
+                cls._instances[database_url] = super().__new__(cls)
+            return cls._instances[database_url]
     
     def __init__(self, database_url: Optional[str] = None):
         """
@@ -272,6 +278,7 @@ class DatabaseManager:
                     logger.warning(f"Permission denied for {db_path}, using temporary path: {db_path}")
                 database_url = f"sqlite:///{db_path}"
             
+            self.database_url = database_url  # Store the URL for reference
             self.engine = create_engine(
                 database_url, 
                 echo=False,
@@ -288,6 +295,12 @@ class DatabaseManager:
     def get_session(self) -> Session:
         """Get a database session"""
         return self.SessionLocal()
+    
+    @classmethod
+    def reset_instances(cls):
+        """Clear all instances - primarily for testing"""
+        with cls._lock:
+            cls._instances.clear()
     
     def save_ladder_snapshot(self, ladder_data: Dict[str, Any], league: str, 
                            ladder_type: str = "league", league_category: str = None,
