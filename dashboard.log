@@ -2508,3 +2508,162 @@ Client disconnected
 2025-06-16 11:46:45,092 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
 2025-06-16 11:46:45,108 - werkzeug - WARNING -  * Debugger is active!
 2025-06-16 11:46:45,115 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-16 11:48:44,745 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/src/storage/database.py', reloading
+2025-06-16 11:48:44,871 - werkzeug - INFO -  * Restarting with stat
+2025-06-16 11:48:44,918 - __main__ - INFO - ============================================================
+2025-06-16 11:48:44,918 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-16 11:48:44,918 - __main__ - INFO - ============================================================
+2025-06-16 11:48:44,918 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-16 11:48:44,918 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-16 11:48:44,918 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-16 11:48:44,918 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-16 11:48:44,929 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-16 11:48:44,929 - __main__ - INFO - Environment variables:
+2025-06-16 11:48:44,929 - __main__ - INFO -   - DB_PATH: default
+2025-06-16 11:48:44,929 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-16 11:48:44,929 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-16 11:48:44,929 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-16 11:48:44,929 - __main__ - INFO - Importing Flask components...
+2025-06-16 11:48:45,225 - __main__ - INFO - ✅ Flask components imported
+2025-06-16 11:48:45,225 - __main__ - INFO - Importing project components...
+2025-06-16 11:48:45,383 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-16 11:48:45,384 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-16 11:48:45,667 - __main__ - INFO - ✅ Project components imported
+2025-06-16 11:48:45,667 - __main__ - INFO - Initializing Flask application...
+2025-06-16 11:48:45,693 - __main__ - INFO - ✅ Flask application initialized
+2025-06-16 11:48:45,693 - __main__ - INFO - Initializing database connection...
+2025-06-16 11:48:45,693 - __main__ - INFO - ✅ Database connection initialized
+2025-06-16 11:48:45,693 - __main__ - INFO - Testing database connection...
+2025-06-16 11:48:45,694 - __main__ - INFO - ✅ Database connection test successful
+2025-06-16 11:48:45,694 - __main__ - INFO - Initializing Claude query service...
+2025-06-16 11:48:45,750 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-16 11:48:45,751 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-16 11:48:45,754 - __main__ - INFO - Starting task manager and background services...
+2025-06-16 11:48:45,755 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-16 11:48:45,755 - __main__ - INFO - ✅ Task manager started
+2025-06-16 11:48:45,755 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-16 11:48:45,755 - __main__ - INFO - ============================================================
+2025-06-16 11:48:45,755 - __main__ - INFO - STARTING WEB SERVER
+2025-06-16 11:48:45,755 - __main__ - INFO - ============================================================
+2025-06-16 11:48:45,755 - __main__ - INFO - Creating templates directory...
+2025-06-16 11:48:45,755 - __main__ - INFO - ✅ Templates directory ready
+2025-06-16 11:48:45,755 - __main__ - INFO - Server configuration:
+2025-06-16 11:48:45,755 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-16 11:48:45,755 - __main__ - INFO -   - Port: 5001
+2025-06-16 11:48:45,755 - __main__ - INFO -   - Debug: True
+2025-06-16 11:48:45,755 - __main__ - INFO -   - CORS: Enabled
+2025-06-16 11:48:45,755 - __main__ - INFO - ============================================================
+2025-06-16 11:48:45,755 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-16 11:48:45,755 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-16 11:48:45,755 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-16 11:48:45,756 - __main__ - INFO - ============================================================
+2025-06-16 11:48:45,756 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-16 11:48:45,776 - werkzeug - WARNING -  * Debugger is active!
+2025-06-16 11:48:45,807 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-16 11:48:50,709 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/src/storage/database.py', reloading
+2025-06-16 11:48:50,823 - werkzeug - INFO -  * Restarting with stat
+2025-06-16 11:48:50,852 - __main__ - INFO - ============================================================
+2025-06-16 11:48:50,852 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-16 11:48:50,852 - __main__ - INFO - ============================================================
+2025-06-16 11:48:50,852 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-16 11:48:50,852 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-16 11:48:50,852 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-16 11:48:50,852 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-16 11:48:50,860 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-16 11:48:50,860 - __main__ - INFO - Environment variables:
+2025-06-16 11:48:50,860 - __main__ - INFO -   - DB_PATH: default
+2025-06-16 11:48:50,860 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-16 11:48:50,860 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-16 11:48:50,860 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-16 11:48:50,860 - __main__ - INFO - Importing Flask components...
+2025-06-16 11:48:51,060 - __main__ - INFO - ✅ Flask components imported
+2025-06-16 11:48:51,060 - __main__ - INFO - Importing project components...
+2025-06-16 11:48:51,192 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-16 11:48:51,193 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-16 11:48:51,399 - __main__ - INFO - ✅ Project components imported
+2025-06-16 11:48:51,399 - __main__ - INFO - Initializing Flask application...
+2025-06-16 11:48:51,414 - __main__ - INFO - ✅ Flask application initialized
+2025-06-16 11:48:51,414 - __main__ - INFO - Initializing database connection...
+2025-06-16 11:48:51,414 - __main__ - INFO - ✅ Database connection initialized
+2025-06-16 11:48:51,414 - __main__ - INFO - Testing database connection...
+2025-06-16 11:48:51,414 - __main__ - INFO - ✅ Database connection test successful
+2025-06-16 11:48:51,414 - __main__ - INFO - Initializing Claude query service...
+2025-06-16 11:48:51,469 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-16 11:48:51,469 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-16 11:48:51,472 - __main__ - INFO - Starting task manager and background services...
+2025-06-16 11:48:51,472 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-16 11:48:51,472 - __main__ - INFO - ✅ Task manager started
+2025-06-16 11:48:51,472 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-16 11:48:51,472 - __main__ - INFO - ============================================================
+2025-06-16 11:48:51,472 - __main__ - INFO - STARTING WEB SERVER
+2025-06-16 11:48:51,472 - __main__ - INFO - ============================================================
+2025-06-16 11:48:51,472 - __main__ - INFO - Creating templates directory...
+2025-06-16 11:48:51,472 - __main__ - INFO - ✅ Templates directory ready
+2025-06-16 11:48:51,472 - __main__ - INFO - Server configuration:
+2025-06-16 11:48:51,472 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-16 11:48:51,472 - __main__ - INFO -   - Port: 5001
+2025-06-16 11:48:51,472 - __main__ - INFO -   - Debug: True
+2025-06-16 11:48:51,472 - __main__ - INFO -   - CORS: Enabled
+2025-06-16 11:48:51,472 - __main__ - INFO - ============================================================
+2025-06-16 11:48:51,472 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-16 11:48:51,472 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-16 11:48:51,472 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-16 11:48:51,472 - __main__ - INFO - ============================================================
+2025-06-16 11:48:51,472 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-16 11:48:51,485 - werkzeug - WARNING -  * Debugger is active!
+2025-06-16 11:48:51,493 - werkzeug - INFO -  * Debugger PIN: 135-038-572
+2025-06-16 11:49:17,132 - werkzeug - INFO -  * Detected change in '/Users/danielbeach/Code/joker-builds/tests/conftest.py', reloading
+2025-06-16 11:49:17,248 - werkzeug - INFO -  * Restarting with stat
+2025-06-16 11:49:17,286 - __main__ - INFO - ============================================================
+2025-06-16 11:49:17,286 - __main__ - INFO - JOKER BUILDS DASHBOARD STARTING UP
+2025-06-16 11:49:17,286 - __main__ - INFO - ============================================================
+2025-06-16 11:49:17,286 - __main__ - INFO - Python version: 3.9.6 (default, Sep 26 2022, 11:37:49) 
+[Clang 14.0.0 (clang-1400.0.29.202)]
+2025-06-16 11:49:17,286 - __main__ - INFO - Current working directory: /Users/danielbeach/Code/joker-builds
+2025-06-16 11:49:17,286 - __main__ - INFO - Python path: ['/Users/danielbeach/Code/joker-builds', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip', '/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9']...
+2025-06-16 11:49:17,286 - __main__ - INFO - Loading environment variables from .env file...
+2025-06-16 11:49:17,297 - __main__ - INFO - ✅ Environment variables loaded
+2025-06-16 11:49:17,297 - __main__ - INFO - Environment variables:
+2025-06-16 11:49:17,297 - __main__ - INFO -   - DB_PATH: default
+2025-06-16 11:49:17,297 - __main__ - INFO -   - FLASK_ENV: development
+2025-06-16 11:49:17,297 - __main__ - INFO -   - LOG_LEVEL: INFO
+2025-06-16 11:49:17,297 - __main__ - INFO -   - ANTHROPIC_API_KEY: SET
+2025-06-16 11:49:17,297 - __main__ - INFO - Importing Flask components...
+2025-06-16 11:49:17,561 - __main__ - INFO - ✅ Flask components imported
+2025-06-16 11:49:17,561 - __main__ - INFO - Importing project components...
+2025-06-16 11:49:17,714 - src.storage.database - INFO - SQLite journal_mode set to WAL.
+2025-06-16 11:49:17,714 - src.storage.database - INFO - Database initialized at sqlite:////Users/danielbeach/Code/joker-builds/data/ladder_snapshots.db
+2025-06-16 11:49:17,991 - __main__ - INFO - ✅ Project components imported
+2025-06-16 11:49:17,991 - __main__ - INFO - Initializing Flask application...
+2025-06-16 11:49:18,008 - __main__ - INFO - ✅ Flask application initialized
+2025-06-16 11:49:18,008 - __main__ - INFO - Initializing database connection...
+2025-06-16 11:49:18,008 - __main__ - INFO - ✅ Database connection initialized
+2025-06-16 11:49:18,008 - __main__ - INFO - Testing database connection...
+2025-06-16 11:49:18,008 - __main__ - INFO - ✅ Database connection test successful
+2025-06-16 11:49:18,008 - __main__ - INFO - Initializing Claude query service...
+2025-06-16 11:49:18,064 - __main__ - INFO - ✅ Claude query service initialized
+2025-06-16 11:49:18,064 - __main__ - INFO - ✅ All components initialized successfully
+2025-06-16 11:49:18,067 - __main__ - INFO - Starting task manager and background services...
+2025-06-16 11:49:18,067 - src.scheduler.task_manager - INFO - Task manager worker started
+2025-06-16 11:49:18,067 - __main__ - INFO - ✅ Task manager started
+2025-06-16 11:49:18,067 - __main__ - INFO - ✅ Background broadcaster started
+2025-06-16 11:49:18,067 - __main__ - INFO - ============================================================
+2025-06-16 11:49:18,067 - __main__ - INFO - STARTING WEB SERVER
+2025-06-16 11:49:18,067 - __main__ - INFO - ============================================================
+2025-06-16 11:49:18,067 - __main__ - INFO - Creating templates directory...
+2025-06-16 11:49:18,067 - __main__ - INFO - ✅ Templates directory ready
+2025-06-16 11:49:18,067 - __main__ - INFO - Server configuration:
+2025-06-16 11:49:18,067 - __main__ - INFO -   - Host: 0.0.0.0
+2025-06-16 11:49:18,067 - __main__ - INFO -   - Port: 5001
+2025-06-16 11:49:18,067 - __main__ - INFO -   - Debug: True
+2025-06-16 11:49:18,067 - __main__ - INFO -   - CORS: Enabled
+2025-06-16 11:49:18,067 - __main__ - INFO - ============================================================
+2025-06-16 11:49:18,067 - __main__ - INFO - 🚀 DASHBOARD READY TO START
+2025-06-16 11:49:18,067 - __main__ - INFO - 📊 Access dashboard at: http://localhost:5001
+2025-06-16 11:49:18,067 - __main__ - INFO - 🔍 View logs at: /app/logs/dashboard.log (in container)
+2025-06-16 11:49:18,067 - __main__ - INFO - ============================================================
+2025-06-16 11:49:18,067 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+2025-06-16 11:49:18,083 - werkzeug - WARNING -  * Debugger is active!
+2025-06-16 11:49:18,090 - werkzeug - INFO -  * Debugger PIN: 135-038-572
