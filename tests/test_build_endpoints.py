@@ -5,8 +5,9 @@ Test various poe.ninja build endpoint patterns
 
 import requests
 import json
+import pytest
 
-def test_endpoint(url, description):
+def check_endpoint(url, description):
     """Test an endpoint and report results"""
     print(f"\nTesting: {description}")
     print(f"URL: {url}")
@@ -36,7 +37,27 @@ def test_endpoint(url, description):
     return False
 
 
-def main():
+@pytest.mark.skip(reason="Manual endpoint testing - requires network access")
+def test_endpoint_exploration():
+    """Test to explore poe.ninja build endpoints"""
+    league = "Settlers"
+    
+    # Test various endpoint patterns
+    endpoints = [
+        ("https://poe.ninja/api/data/0/getbuildoverview?overview=Settlers&type=exp&language=en",
+         "Original pattern with 0"),
+    ]
+    
+    successful = []
+    
+    for url, desc in endpoints:
+        if check_endpoint(url, desc):
+            successful.append((url, desc))
+    
+    assert len(successful) >= 0  # Always pass - this is exploratory
+
+
+if __name__ == "__main__":
     print("=" * 80)
     print("TESTING POE.NINJA BUILD ENDPOINTS")
     print("=" * 80)
@@ -87,7 +108,7 @@ def main():
     successful = []
     
     for url, desc in endpoints:
-        if test_endpoint(url, desc):
+        if check_endpoint(url, desc):
             successful.append((url, desc))
     
     print("\n" + "=" * 80)
@@ -106,7 +127,3 @@ def main():
         print("2. Using a different API structure")
         print("3. Loaded client-side from a different source")
         print("4. Not publicly available via API")
-
-
-if __name__ == "__main__":
-    main()

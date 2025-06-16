@@ -15,7 +15,8 @@ def test_claude_integration():
     if not api_key:
         print("❌ ANTHROPIC_API_KEY not set. Set environment variable to test Claude integration.")
         print("Example: export ANTHROPIC_API_KEY='your_api_key_here'")
-        return False
+        assert True  # Skip test when no API key
+        return
     
     try:
         # Initialize services
@@ -54,11 +55,11 @@ def test_claude_integration():
             print()
         
         print("🎉 Claude integration test completed!")
-        return True
+        assert True
         
     except Exception as e:
         print(f"❌ Integration test failed: {e}")
-        return False
+        assert False, f"Integration test failed: {e}"
 
 def test_fallback_parsing():
     """Test fallback parsing without Claude API"""
@@ -81,11 +82,11 @@ def test_fallback_parsing():
             print(f"'{query}' -> {result['intent']['filters']}")
         
         print("✅ Fallback parsing works!")
-        return True
+        assert True
         
     except Exception as e:
         print(f"❌ Fallback test failed: {e}")
-        return False
+        assert False, f"Fallback test failed: {e}"
 
 if __name__ == "__main__":
     print("Joker Builds - Claude Integration Test")

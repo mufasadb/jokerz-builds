@@ -12,14 +12,23 @@ from src.storage.database import DatabaseManager, LadderSnapshot, Character, Sna
 class TestDatabaseManager:
     """Test cases for DatabaseManager"""
     
-    @pytest.fixture
+    @pytest.fixture(scope="function")
     def temp_db(self):
         """Create temporary database for testing"""
+        import os
+        # Create a unique temporary database file for each test
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as f:
-            db_url = f"sqlite:///{f.name}"
-            yield db_url
+            temp_path = f.name
+        try:
+            yield f"sqlite:///{temp_path}"
+        finally:
+            # Clean up the temporary file
+            try:
+                os.unlink(temp_path)
+            except FileNotFoundError:
+                pass
     
-    @pytest.fixture
+    @pytest.fixture(scope="function")
     def db_manager(self, temp_db):
         """Create database manager with temporary database"""
         return DatabaseManager(temp_db)
