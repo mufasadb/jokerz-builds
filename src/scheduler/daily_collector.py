@@ -198,13 +198,29 @@ def main():
     
     # Set up logging
     log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
+    
+    # Create logs directory if it doesn't exist
+    logs_dir = '/app/logs' if os.path.exists('/app') else './logs'
+    os.makedirs(logs_dir, exist_ok=True)
+    
+    handlers = [logging.StreamHandler(sys.stdout)]
+    
+    # Add file handler for collector logs
+    collector_log_path = os.path.join(logs_dir, 'collector.log')
+    handlers.append(logging.FileHandler(collector_log_path, mode='a'))
+    
     logging.basicConfig(
         level=getattr(logging, log_level),
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.StreamHandler(sys.stdout)
-        ]
+        handlers=handlers
     )
+    
+    logger.info("=" * 60)
+    logger.info("JOKER BUILDS COLLECTOR STARTING UP")
+    logger.info("=" * 60)
+    logger.info(f"Log level: {log_level}")
+    logger.info(f"Collector log path: {collector_log_path}")
+    logger.info(f"Environment: {os.getenv('FLASK_ENV', 'development')}")
     
     collector = DailyCollector()
     

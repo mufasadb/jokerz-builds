@@ -25,8 +25,8 @@ services:
       # Persistent data storage
       - ./data:/app/data
       
-      # Optional: Mount logs directory
-      - ./logs:/app/logs
+      # Shared logs directory (same as dashboard)
+      - logs:/app/logs
     
     command: python -m src.scheduler.daily_collector
     
@@ -61,6 +61,9 @@ services:
     volumes:
       # Shared data storage with collector
       - ./data:/app/data
+      
+      # Shared logs directory (same as collector)
+      - logs:/app/logs
     
     ports:
       - "5001:5001"

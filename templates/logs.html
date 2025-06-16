@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker Builds - Logs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .control-group label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        select, input, button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+        }
+        
+        select option {
+            background: #2a5298;
+            color: white;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logs-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            padding: 8px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-entry:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .log-timestamp {
+            color: #74b9ff;
+            margin-right: 10px;
+        }
+        
+        .log-service {
+            color: #00b894;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .log-level {
+            margin-right: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .log-level-ERROR {
+            background: #d63031;
+            color: white;
+        }
+        
+        .log-level-WARNING {
+            background: #fdcb6e;
+            color: #2d3436;
+        }
+        
+        .log-level-INFO {
+            background: #74b9ff;
+            color: white;
+        }
+        
+        .log-level-DEBUG {
+            background: #a29bfe;
+            color: white;
+        }
+        
+        .log-message {
+            color: #ddd;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #74b9ff;
+        }
+        
+        .error {
+            color: #ff7675;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #b2bec3;
+            font-style: italic;
+        }
+        
+        .refresh-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .refresh-indicator.active {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🃏 Joker Builds - System Logs</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="service">Service:</label>
+                <select id="service">
+                    <option value="all">All Services</option>
+                    <option value="dashboard">Dashboard</option>
+                    <option value="collector">Collector</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="level">Log Level:</label>
+                <select id="level">
+                    <option value="all">All Levels</option>
+                    <option value="ERROR">Error</option>
+                    <option value="WARNING">Warning</option>
+                    <option value="INFO">Info</option>
+                    <option value="DEBUG">Debug</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="hours">Time Range:</label>
+                <select id="hours">
+                    <option value="1">Last Hour</option>
+                    <option value="6">Last 6 Hours</option>
+                    <option value="24" selected>Last 24 Hours</option>
+                    <option value="72">Last 3 Days</option>
+                    <option value="168">Last Week</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="limit">Max Entries:</label>
+                <select id="limit">
+                    <option value="100">100</option>
+                    <option value="500" selected>500</option>
+                    <option value="1000">1000</option>
+                    <option value="2000">2000</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>&nbsp;</label>
+                <button onclick="refreshLogs()">Refresh Logs</button>
+            </div>
+            
+            <div class="auto-refresh">
+                <input type="checkbox" id="autoRefresh">
+                <label for="autoRefresh">Auto-refresh (30s)</label>
+                <span class="refresh-indicator" id="refreshIndicator">🔄</span>
+            </div>
+        </div>
+        
+        <div class="stats" id="logStats">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <div class="logs-container" id="logsContainer">
+            <div class="loading">Loading logs...</div>
+        </div>
+    </div>
+
+    <script>
+        let autoRefreshInterval = null;
+        
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        function createLogEntry(log) {
+            return `
+                <div class="log-entry">
+                    <span class="log-timestamp">${formatTimestamp(log.timestamp)}</span>
+                    <span class="log-service">[${log.service.toUpperCase()}]</span>
+                    <span class="log-level log-level-${log.level}">${log.level}</span>
+                    <span class="log-message">${escapeHtml(log.message)}</span>
+                </div>
+            `;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function updateStats(data) {
+            const statsContainer = document.getElementById('logStats');
+            
+            // Count by level and service
+            const levelCounts = {};
+            const serviceCounts = {};
+            
+            data.logs.forEach(log => {
+                levelCounts[log.level] = (levelCounts[log.level] || 0) + 1;
+                serviceCounts[log.service] = (serviceCounts[log.service] || 0) + 1;
+            });
+            
+            const statsHtml = `
+                <div class="stat-item">
+                    <strong>Total Entries:</strong> ${data.total_count}
+                </div>
+                <div class="stat-item">
+                    <strong>Time Range:</strong> ${data.hours}h
+                </div>
+                <div class="stat-item">
+                    <strong>Errors:</strong> ${levelCounts.ERROR || 0}
+                </div>
+                <div class="stat-item">
+                    <strong>Warnings:</strong> ${levelCounts.WARNING || 0}
+                </div>
+                <div class="stat-item">
+                    <strong>Dashboard:</strong> ${serviceCounts.dashboard || 0}
+                </div>
+                <div class="stat-item">
+                    <strong>Collector:</strong> ${serviceCounts.collector || 0}
+                </div>
+            `;
+            
+            statsContainer.innerHTML = statsHtml;
+        }
+        
+        function refreshLogs() {
+            const refreshIndicator = document.getElementById('refreshIndicator');
+            refreshIndicator.classList.add('active');
+            
+            const service = document.getElementById('service').value;
+            const level = document.getElementById('level').value;
+            const hours = document.getElementById('hours').value;
+            const limit = document.getElementById('limit').value;
+            
+            const params = new URLSearchParams({
+                service: service,
+                level: level,
+                hours: hours,
+                limit: limit
+            });
+            
+            fetch(`/api/logs?${params}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const container = document.getElementById('logsContainer');
+                    
+                    if (data.logs.length === 0) {
+                        container.innerHTML = '<div class="empty">No logs found for the selected criteria.</div>';
+                    } else {
+                        const logsHtml = data.logs.map(createLogEntry).join('');
+                        container.innerHTML = logsHtml;
+                        
+                        // Auto-scroll to top for newest logs
+                        container.scrollTop = 0;
+                    }
+                    
+                    updateStats(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching logs:', error);
+                    document.getElementById('logsContainer').innerHTML = 
+                        `<div class="error">Error loading logs: ${error.message}</div>`;
+                })
+                .finally(() => {
+                    refreshIndicator.classList.remove('active');
+                });
+        }
+        
+        function setupAutoRefresh() {
+            const checkbox = document.getElementById('autoRefresh');
+            
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    autoRefreshInterval = setInterval(refreshLogs, 30000);
+                } else {
+                    if (autoRefreshInterval) {
+                        clearInterval(autoRefreshInterval);
+                        autoRefreshInterval = null;
+                    }
+                }
+            });
+        }
+        
+        // Event listeners for filter changes
+        document.getElementById('service').addEventListener('change', refreshLogs);
+        document.getElementById('level').addEventListener('change', refreshLogs);
+        document.getElementById('hours').addEventListener('change', refreshLogs);
+        document.getElementById('limit').addEventListener('change', refreshLogs);
+        
+        // Initialize
+        setupAutoRefresh();
+        refreshLogs();
+    </script>
+</body>
+</html>

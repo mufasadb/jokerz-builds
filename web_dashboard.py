@@ -330,6 +330,186 @@ def cancel_scraping(task_id):
         return jsonify({'error': 'Cannot cancel task'}), 400
 
 
+@app.route('/logs')
+def logs_page():
+    """Serve logs page"""
+    return render_template('logs.html')
+
+
+@app.route('/api/logs')
+def get_logs():
+    """Get aggregated logs from both collector and dashboard"""
+    import glob
+    import re
+    from datetime import datetime, timedelta
+    
+    # Parameters
+    limit = int(request.args.get('limit', 500))
+    service = request.args.get('service', 'all')  # 'all', 'dashboard', 'collector'
+    level = request.args.get('level', 'all')  # 'all', 'ERROR', 'WARNING', 'INFO', 'DEBUG'
+    hours = int(request.args.get('hours', 24))  # Last N hours
+    
+    logs = []
+    cutoff_time = datetime.now() - timedelta(hours=hours)
+    
+    # Define log file patterns
+    log_paths = []
+    if service in ['all', 'dashboard']:
+        log_paths.extend([
+            '/app/logs/dashboard.log',
+            './logs/dashboard.log',
+            './dashboard.log'
+        ])
+    if service in ['all', 'collector']:
+        log_paths.extend([
+            '/app/logs/collector.log',
+            './logs/collector.log',
+            './collector.log'
+        ])
+    
+    # Also check for rotated logs
+    for path in log_paths[:]:
+        log_paths.extend(glob.glob(f"{path}.*"))
+    
+    # Parse log files
+    log_pattern = re.compile(
+        r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) - ([\w.]+) - (\w+) - (.+)'
+    )
+    
+    for log_path in log_paths:
+        try:
+            if not os.path.exists(log_path):
+                continue
+                
+            service_name = 'dashboard' if 'dashboard' in log_path else 'collector'
+            
+            with open(log_path, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                        
+                    match = log_pattern.match(line)
+                    if match:
+                        timestamp_str, logger_name, log_level, message = match.groups()
+                        
+                        # Parse timestamp
+                        try:
+                            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S,%f')
+                        except ValueError:
+                            continue
+                            
+                        # Filter by time
+                        if timestamp < cutoff_time:
+                            continue
+                            
+                        # Filter by level
+                        if level != 'all' and log_level != level:
+                            continue
+                            
+                        logs.append({
+                            'timestamp': timestamp.isoformat(),
+                            'service': service_name,
+                            'logger': logger_name,
+                            'level': log_level,
+                            'message': message,
+                            'file': os.path.basename(log_path)
+                        })
+                    else:
+                        # Handle multi-line logs or non-standard format
+                        logs.append({
+                            'timestamp': datetime.now().isoformat(),
+                            'service': service_name,
+                            'logger': 'unknown',
+                            'level': 'INFO',
+                            'message': line,
+                            'file': os.path.basename(log_path)
+                        })
+                        
+        except Exception as e:
+            logger.error(f"Error reading log file {log_path}: {e}")
+    
+    # Sort by timestamp (newest first) and limit
+    logs.sort(key=lambda x: x['timestamp'], reverse=True)
+    logs = logs[:limit]
+    
+    return jsonify({
+        'logs': logs,
+        'total_count': len(logs),
+        'service': service,
+        'level': level,
+        'hours': hours,
+        'cutoff_time': cutoff_time.isoformat()
+    })
+
+
+@app.route('/api/logs/tail')
+def tail_logs():
+    """Get the last N lines from logs (like tail -f)"""
+    lines = int(request.args.get('lines', 100))
+    service = request.args.get('service', 'all')
+    
+    result = []
+    
+    # Get recent log entries
+    log_paths = []
+    if service in ['all', 'dashboard']:
+        log_paths.extend(['/app/logs/dashboard.log', './logs/dashboard.log', './dashboard.log'])
+    if service in ['all', 'collector']:
+        log_paths.extend(['/app/logs/collector.log', './logs/collector.log', './collector.log'])
+    
+    for log_path in log_paths:
+        try:
+            if not os.path.exists(log_path):
+                continue
+                
+            service_name = 'dashboard' if 'dashboard' in log_path else 'collector'
+            
+            # Read last N lines efficiently
+            with open(log_path, 'rb') as f:
+                f.seek(0, 2)  # Go to end of file
+                file_size = f.tell()
+                
+                # Read backwards to find last N lines
+                lines_found = 0
+                buffer = b''
+                chunk_size = 1024
+                
+                for pos in range(file_size - chunk_size, -1, -chunk_size):
+                    if pos < 0:
+                        pos = 0
+                        chunk_size = file_size
+                    
+                    f.seek(pos)
+                    chunk = f.read(chunk_size)
+                    buffer = chunk + buffer
+                    
+                    lines_found = buffer.count(b'\n')
+                    if lines_found >= lines:
+                        break
+                
+                # Decode and split lines
+                text = buffer.decode('utf-8', errors='ignore')
+                file_lines = text.split('\n')[-lines:]
+                
+                for line in file_lines:
+                    if line.strip():
+                        result.append({
+                            'service': service_name,
+                            'line': line.strip(),
+                            'file': os.path.basename(log_path)
+                        })
+                        
+        except Exception as e:
+            logger.error(f"Error tailing log file {log_path}: {e}")
+    
+    return jsonify({
+        'lines': result[-lines:],  # Ensure we don't exceed limit
+        'total_lines': len(result),
+        'service': service
+    })
+
+
 @socketio.on('connect')
 def handle_connect():
     """Handle client connection"""
